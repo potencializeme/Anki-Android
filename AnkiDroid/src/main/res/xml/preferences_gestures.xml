@@ -31,7 +31,7 @@
         android:key="gestures"
         android:summary="@string/gestures_summ"
         android:title="@string/gestures" />
-    <com.ichi2.ui.SeekBarPreference
+    <com.ankipro2.ui.SeekBarPreference
         android:defaultValue="100"
         android:dependency="gestures"
         android:dialogMessage="@string/preference_summary_literal"

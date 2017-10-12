@@ -13,16 +13,16 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.tests.libanki;
+package com.ankipro2.anki.tests.libanki;
 
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.tests.Shared;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Media;
-import com.ichi2.libanki.Note;
+import com.ankipro2.anki.BackupManager;
+import com.ankipro2.anki.tests.Shared;
+import com.ankipro2.libanki.Collection;
+import com.ankipro2.libanki.Media;
+import com.ankipro2.libanki.Note;
 
 import java.io.File;
 import java.io.FileOutputStream;

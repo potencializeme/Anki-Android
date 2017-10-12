@@ -17,7 +17,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.tests;
+package com.ankipro2.anki.tests;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -27,18 +27,18 @@ import android.net.Uri;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
-import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.FlashCardsContract;
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Models;
-import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
-import com.ichi2.libanki.Utils;
+import com.ankipro2.anki.AbstractFlashcardViewer;
+import com.ankipro2.anki.AnkiDroidApp;
+import com.ankipro2.anki.CollectionHelper;
+import com.ankipro2.anki.FlashCardsContract;
+import com.ankipro2.anki.exception.ConfirmModSchemaException;
+import com.ankipro2.libanki.Card;
+import com.ankipro2.libanki.Collection;
+import com.ankipro2.libanki.Decks;
+import com.ankipro2.libanki.Models;
+import com.ankipro2.libanki.Note;
+import com.ankipro2.libanki.Sched;
+import com.ankipro2.libanki.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,13 +48,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Test cases for {@link com.ichi2.anki.provider.CardContentProvider}.
+ * Test cases for {@link com.ankipro2.anki.provider.CardContentProvider}.
  * <p/>
  * These tests should cover all supported operations for each URI.
  */
 public class ContentProviderTest extends AndroidTestCase {
 
-    private static final String BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F";
+    private static final String BASIC_MODEL_NAME = "com.ankipro2.anki.provider.test.basic.x94oa3F";
     private static final String TEST_FIELD_NAME = "TestFieldName";
     private static final String TEST_FIELD_VALUE = "test field value";
     private static final String TEST_TAG = "aldskfhewjklhfczmxkjshf";
@@ -62,7 +62,7 @@ public class ContentProviderTest extends AndroidTestCase {
                                                 ,"sstuljxgmfdyugiujyhq"
                                                 ,"pdsqoelhmemmmbwjunnu"
                                                 ,"scxipjiyozczaaczoawo"};
-    private static final String TEST_MODEL_NAME = "com.ichi2.anki.provider.test.a1x6h9l";
+    private static final String TEST_MODEL_NAME = "com.ankipro2.anki.provider.test.a1x6h9l";
     private static final String[] TEST_MODEL_FIELDS = {"FRONTS","BACK"};
     private static final String[] TEST_MODEL_CARDS = {"cArD1", "caRD2"};
     private static final String[] TEST_MODEL_QFMT = {"{{FRONTS}}", "{{BACK}}"};

@@ -39,7 +39,7 @@
             android:key="custom_sync_server_link"
             android:title="@string/custom_sync_server_title"/>
         <PreferenceCategory android:title="@string/pref_cat_performance" >
-            <com.ichi2.ui.SeekBarPreference
+            <com.ankipro2.ui.SeekBarPreference
                 android:defaultValue="8"
                 android:key="backupMax"
                 android:max="10"
@@ -103,7 +103,7 @@
                 android:key="dictionary"
                 android:summary="@string/preference_summary_literal"
                 android:title="@string/dictionary" />
-            <com.ichi2.preferences.CustomDialogPreference
+            <com.ankipro2.preferences.CustomDialogPreference
                 android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/reset_languages_question"
                 android:dialogTitle="@string/reset_languages"
@@ -138,7 +138,7 @@
         android:key="about_dialog_preference"
         android:title="@string/about_title">
         <intent
-            android:targetPackage="com.ichi2.anki"
-            android:targetClass="com.ichi2.anki.Info"/>
+            android:targetPackage="com.ankipro2.anki"
+            android:targetClass="com.ankipro2.anki.Info"/>
     </Preference>
 </PreferenceScreen>
