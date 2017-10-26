@@ -1832,7 +1832,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (did != null) {
             // filename not explicitly specified, but a deck has been specified so use deck name
             try {
-                exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + ".ankidroid");
+                exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + ".ankipro");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
