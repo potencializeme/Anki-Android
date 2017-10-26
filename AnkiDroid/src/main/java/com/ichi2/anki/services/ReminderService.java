@@ -10,8 +10,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.ankipro.anki.IntentHandler;
 import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.R;
 import com.ichi2.anki.receiver.ReminderReceiver;
 import com.ichi2.libanki.Sched;

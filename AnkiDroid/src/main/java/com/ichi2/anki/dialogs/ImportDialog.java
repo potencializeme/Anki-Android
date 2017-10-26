@@ -12,7 +12,6 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.Themes;
 
 import java.io.File;
 import java.util.List;

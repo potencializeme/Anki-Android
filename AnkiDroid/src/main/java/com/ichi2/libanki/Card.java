@@ -22,6 +22,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.ankipro.libanki.Utils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -121,7 +123,7 @@ public class Card implements Cloneable {
             load();
         } else {
             // to flush, set nid, ord, and due
-            mId = Utils.timestampID(mCol.getDb(), "cards");
+            mId = com.ankipro.libanki.Utils.timestampID(mCol.getDb(), "cards");
             mDid = 1;
             mType = 0;
             mQueue = 0;
@@ -180,7 +182,7 @@ public class Card implements Cloneable {
 
     public void flush(boolean changeModUsn) {
         if (changeModUsn) {
-            mMod = Utils.intNow();
+            mMod = com.ankipro.libanki.Utils.intNow();
             mUsn = mCol.usn();
         }
         // bug check
@@ -216,7 +218,7 @@ public class Card implements Cloneable {
 
 
     public void flushSched() {
-        mMod = Utils.intNow();
+        mMod = com.ankipro.libanki.Utils.intNow();
         mUsn = mCol.usn();
         // bug check
         if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
@@ -345,7 +347,7 @@ public class Card implements Cloneable {
 
 
     public void startTimer() {
-        mTimerStarted = Utils.now();
+        mTimerStarted = com.ankipro.libanki.Utils.now();
     }
 
 
@@ -375,13 +377,13 @@ public class Card implements Cloneable {
      * Time taken to answer card, in integer MS.
      */
     public int timeTaken() {
-        int total = (int) ((Utils.now() - mTimerStarted) * 1000);
+        int total = (int) ((com.ankipro.libanki.Utils.now() - mTimerStarted) * 1000);
         return Math.min(total, timeLimit());
     }
 
 
     public boolean isEmpty() {
-        ArrayList<Integer> ords = mCol.getModels().availOrds(model(), Utils.joinFields(note().getFields()));
+        ArrayList<Integer> ords = mCol.getModels().availOrds(model(), com.ankipro.libanki.Utils.joinFields(note().getFields()));
         return !ords.contains(mOrd);
     }
 
@@ -418,7 +420,7 @@ public class Card implements Cloneable {
      * method when the session resumes to start counting review time again.
      */
     public void stopTimer() {
-        mElapsedTime = Utils.now() - mTimerStarted;
+        mElapsedTime = com.ankipro.libanki.Utils.now() - mTimerStarted;
     }
 
 
@@ -600,6 +602,14 @@ public class Card implements Cloneable {
         mLastIvl = ivl;
     }
 
+    public void setData(String data) {
+        mData = data;
+    }
+
+
+    public String getData() {
+        return mData;
+    }
 
     // Needed for tests
     public Collection getCol() {

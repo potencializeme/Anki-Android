@@ -194,7 +194,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     private void createSpareMenu(LinearLayout linearLayout) {
 
-        LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
+        LayoutParams pars = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
 
         Button toTextButton = new Button(this);
         toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_text));

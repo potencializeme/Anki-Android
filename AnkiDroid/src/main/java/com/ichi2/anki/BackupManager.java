@@ -58,7 +58,7 @@ public class BackupManager {
 
 
     /* Prevent class from being instantiated */
-    private BackupManager() {
+    protected BackupManager() {
     }
 
 
@@ -67,7 +67,7 @@ public class BackupManager {
     }
 
 
-    private static File getBackupDirectory(File ankidroidDir) {
+    protected static File getBackupDirectory(File ankidroidDir) {
         File directory = new File(ankidroidDir, BACKUP_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
@@ -218,7 +218,7 @@ public class BackupManager {
     }
 
 
-    private static long getFreeDiscSpace(File file) {
+    protected static long getFreeDiscSpace(File file) {
         try {
             StatFs stat = new StatFs(file.getParentFile().getPath());
             long blocks = stat.getAvailableBlocks();

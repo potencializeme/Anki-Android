@@ -71,13 +71,13 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         mEditText = new EditText(mActivity);
         mEditText.setMinLines(3);
         mEditText.setText(mField.getText());
-        layout.addView(mEditText, LinearLayout.LayoutParams.FILL_PARENT);
+        layout.addView(mEditText, LayoutParams.FILL_PARENT);
 
         LinearLayout layoutTools = new LinearLayout(mActivity);
         layoutTools.setOrientation(LinearLayout.HORIZONTAL);
         layout.addView(layoutTools);
 
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.FILL_PARENT, 1);
+        LayoutParams p = new LayoutParams(0, LayoutParams.FILL_PARENT, 1);
 
         createCloneButton(layoutTools, p);
         createClearButton(layoutTools, p);

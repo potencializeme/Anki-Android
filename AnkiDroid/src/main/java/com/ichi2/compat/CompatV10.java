@@ -25,9 +25,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
@@ -145,7 +143,7 @@ public class CompatV10 implements Compat {
         Resources res = activity.getResources();
         new MaterialDialog.Builder(activity)
                 .items(new String[]{res.getString(R.string.menu_add_note),
-                        res.getString(R.string.menu_get_shared_decks),
+                        //res.getString(R.string.menu_get_shared_decks),
                         res.getString(R.string.new_deck)})
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
@@ -185,7 +183,7 @@ public class CompatV10 implements Compat {
     @Override
     public Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
         // We're using "legacy preference headers" below API 11
-        Intent i = new Intent(context, Preferences.class);
+        Intent i = new Intent(context, com.ichi2.anki.Preferences.class);
         i.setAction(subscreen);
         return i;
     }

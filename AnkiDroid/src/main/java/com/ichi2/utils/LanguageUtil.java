@@ -17,7 +17,6 @@ package com.ichi2.utils;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.Preferences;
 
 import java.util.Locale;
 
@@ -46,7 +45,7 @@ public class LanguageUtil {
         if (localeCode == null || TextUtils.isEmpty(localeCode)) {
 
             localeCode = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getString(
-                    Preferences.LANGUAGE, "");
+                    com.ichi2.anki.Preferences.LANGUAGE, "");
             // If no code provided use the app language.
         }
         if (TextUtils.isEmpty(localeCode)) {

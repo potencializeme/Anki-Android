@@ -44,14 +44,12 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
-import com.ichi2.libanki.Sched;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
-import java.text.MessageFormat;
 import java.util.List;
 
 import timber.log.Timber;

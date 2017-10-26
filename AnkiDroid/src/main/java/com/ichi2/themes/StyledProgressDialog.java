@@ -20,7 +20,6 @@ package com.ichi2.themes;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.WindowManager.BadTokenException;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -62,7 +61,7 @@ public class StyledProgressDialog extends Dialog {
 
 
     public static MaterialDialog show(Context context, CharSequence title, CharSequence message,
-            boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
+            boolean cancelable, OnCancelListener cancelListener) {
         return new MaterialDialog.Builder(context)
                 .title(title)
                 .content(message)

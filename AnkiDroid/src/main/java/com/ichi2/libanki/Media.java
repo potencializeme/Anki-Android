@@ -118,7 +118,11 @@ public class Media {
             return;
         }
         // media directory
-        mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
+        if(col.getPath().contains("ankicfc")){
+            mDir = col.getPath().replaceFirst("\\.ankicfc$", ".media");
+        }else {
+            mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
+        }
         File fd = new File(mDir);
         if (!fd.exists()) {
             if (!fd.mkdir()) {

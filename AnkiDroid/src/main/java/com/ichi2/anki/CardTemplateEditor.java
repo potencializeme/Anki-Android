@@ -47,7 +47,6 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.themes.Themes;
 import com.ichi2.ui.SlidingTabLayout;
 
 import org.json.JSONArray;
@@ -296,7 +295,7 @@ public class CardTemplateEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
 
     /**
-     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the tabs.
      */
     public class TemplatePagerAdapter extends FragmentPagerAdapter {

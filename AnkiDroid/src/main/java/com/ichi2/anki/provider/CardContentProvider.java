@@ -177,9 +177,9 @@ public class CardContentProvider extends ContentProvider {
             case MODELS_ID_EMPTY_CARDS:
                 return FlashCardsContract.Card.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES:
-                return FlashCardsContract.CardTemplate.CONTENT_TYPE;
+                return CardTemplate.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES_ID:
-                return FlashCardsContract.CardTemplate.CONTENT_ITEM_TYPE;
+                return CardTemplate.CONTENT_ITEM_TYPE;
             case SCHEDULE:
                 return FlashCardsContract.ReviewInfo.CONTENT_TYPE;
             case DECKS:

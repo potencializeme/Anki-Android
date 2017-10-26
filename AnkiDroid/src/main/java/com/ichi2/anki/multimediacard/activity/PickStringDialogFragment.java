@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 public class PickStringDialogFragment extends DialogFragment {
     private ArrayList<String> mPossibleChoices;
-    private android.content.DialogInterface.OnClickListener mListener;
+    private DialogInterface.OnClickListener mListener;
     private String mTitle;
 
 

@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;

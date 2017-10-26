@@ -85,7 +85,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         int height = metrics.heightPixels;
         int width = metrics.widthPixels;
 
-        LinearLayout.LayoutParams p = new LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
+        LayoutParams p = new LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         setPreviewImage(mField.getImagePath(), getMaxImageSize());
         mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -99,7 +99,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mBtnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 mActivity.startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
             }
         });
@@ -110,7 +110,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File image;
                 File storageDir;
                 String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());

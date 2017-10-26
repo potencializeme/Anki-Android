@@ -27,9 +27,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Html;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
@@ -43,14 +40,12 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -70,13 +65,11 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.Deflater;
@@ -108,7 +101,7 @@ public class Utils {
     private static final String[] FONT_FILE_EXTENSIONS = new String[] {".ttf",".ttc",".otf"};
 
     /* Prevent class from being instantiated */
-    private Utils() { }
+    protected Utils() { }
 
     // Regex pattern used in removing tags from text before diff
     private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
@@ -665,7 +658,7 @@ public class Utils {
      * Compress data.
      * @param bytesToCompress is the byte array to compress.
      * @return a compressed byte array.
-     * @throws java.io.IOException
+     * @throws IOException
      */
     public static byte[] compress(byte[] bytesToCompress, int comp) throws IOException {
         // Compressor with highest level of compression.
@@ -957,7 +950,7 @@ public class Utils {
      *
      * @param json a json object to serialize
      * @return the json serialization of the object
-     * @see org.json.JSONObject#toString()
+     * @see JSONObject#toString()
      */
     public static String jsonToString(JSONObject json) {
         return json.toString().replaceAll("\\\\/", "/");
@@ -971,7 +964,7 @@ public class Utils {
      *
      * @param json a json object to serialize
      * @return the json serialization of the object
-     * @see org.json.JSONArray#toString()
+     * @see JSONArray#toString()
      */
     public static String jsonToString(JSONArray json) {
         return json.toString().replaceAll("\\\\/", "/");

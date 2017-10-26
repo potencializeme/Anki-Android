@@ -729,7 +729,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void showTagsDialog() {
-        TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
+        TagsDialog dialog = TagsDialog.newInstance(
             TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<>(getCol().getTags().all()));
         dialog.setTagsDialogListener(new TagsDialogListener() {
             @Override

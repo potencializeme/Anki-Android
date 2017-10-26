@@ -43,7 +43,7 @@ public class CollectionHelper {
     // Path to collection, cached for the reopenCollection() method
     private String mPath;
     // Name of anki2 file
-    public static final String COLLECTION_FILENAME = "collection.anki2";
+    public static String COLLECTION_FILENAME = "collection.ankicfc";
 
     /**
      * Prevents {@link com.ichi2.async.CollectionLoader} from spuriously re-opening the {@link Collection}.
@@ -59,6 +59,10 @@ public class CollectionHelper {
     }
     public synchronized boolean isCollectionLocked() {
         return mCollectionLocked;
+    }
+
+    public void setCollectionFileName(String collectionFileName) {
+        this.COLLECTION_FILENAME = collectionFileName;
     }
 
 

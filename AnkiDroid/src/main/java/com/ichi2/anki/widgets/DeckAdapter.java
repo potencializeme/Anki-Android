@@ -152,7 +152,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
 
     @Override
-    public DeckAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = mLayoutInflater.inflate(R.layout.deck_item, parent, false);
         return new ViewHolder(v);
     }
