@@ -3,7 +3,7 @@ package com.ichi2.async;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;
 
@@ -23,7 +23,7 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
             return CollectionHelper.getInstance().getCol(getContext());
         } catch (RuntimeException e) {
             Timber.e(e, "loadInBackground - RuntimeException on opening collection");
-            AnkiDroidApp.sendExceptionReport(e, "CollectionLoader.loadInBackground");
+            AnkiProApp.sendExceptionReport(e, "CollectionLoader.loadInBackground");
             return null;
         }
     }

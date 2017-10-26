@@ -111,7 +111,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     public boolean animationDisabled() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(this);
         return preferences.getBoolean("eInkDisplay", false);
     }
 
@@ -408,7 +408,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     public void showSimpleNotification(String title, String message) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
+        SharedPreferences prefs = AnkiProApp.getSharedPrefs(this);
         // Don't show notification if disabled in preferences
         if (Integer.parseInt(prefs.getString("minimumCardsDueForNotification", "0")) <= 1000000) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"

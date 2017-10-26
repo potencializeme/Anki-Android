@@ -38,7 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.glosbe.json.Meaning;
 import com.ichi2.anki.multimediacard.glosbe.json.Phrase;
@@ -140,7 +140,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         mSpinnerTo.setAdapter(adapterTo);
         linearLayout.addView(mSpinnerTo);
 
-        final SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        final SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
 
         // Try to set spinner value to last selected position
         String fromLang = preferences.getString("translatorLastLanguageFrom", "");

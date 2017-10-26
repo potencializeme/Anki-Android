@@ -22,10 +22,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 
-import com.ankipro.libanki.AnkiDroidPackageExporter;
-import com.ankipro.libanki.importer.AnkiDroidPackageImporter;
+import com.ankipro.libanki.AnkiProPackageExporter;
+import com.ankipro.libanki.importer.AnkiProPackageImporter;
 import com.google.gson.stream.JsonReader;
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CollectionHelper;
@@ -222,7 +222,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         }
         sLatestInstance = this;
-        mContext = AnkiDroidApp.getInstance().getApplicationContext();
+        mContext = AnkiProApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
         if (mType != TASK_TYPE_REPAIR_DECK && CollectionHelper.getInstance().getColSafe(mContext) == null) {
@@ -384,7 +384,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding fact");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundAddNote");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -427,7 +427,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating fact");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -461,7 +461,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -569,7 +569,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -605,7 +605,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundUndo");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -744,10 +744,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundImportAdd(TaskData... params) {
         Timber.d("doInBackgroundImportAdd -- get resources");
-        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+        Resources res = AnkiProApp.getInstance().getBaseContext().getResources();
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         String path = params[0].getString();
-        AnkiDroidPackageImporter imp = new AnkiDroidPackageImporter(col, path);
+        AnkiProPackageImporter imp = new AnkiProPackageImporter(col, path);
         imp.setProgressCallback(new ProgressCallback(this, res));
         imp.run();
         return new TaskData(new Object[] {imp});
@@ -758,7 +758,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundImportReplace");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         String path = params[0].getString();
-        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+        Resources res = AnkiProApp.getInstance().getBaseContext().getResources();
 
         // extract the deck from the zip file
         String colPath = col.getPath();
@@ -774,7 +774,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             zip = new ZipFile(new File(path), ZipFile.OPEN_READ);
         } catch (IOException e) {
             Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
             return new TaskData(false);
         }
         try {
@@ -864,15 +864,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(true);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
             return new TaskData(false);
         } catch (FileNotFoundException e) {
             Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
             return new TaskData(false);
         } catch (IOException e) {
             Timber.e(e, "doInBackgroundImportReplace - IOException");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
             return new TaskData(false);
         }
     }
@@ -891,7 +891,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         String[] cryp_fields ={product_ninja_id,product_ninja_key,"on"};
 
         try {
-            AnkiDroidPackageExporter exporter = new AnkiDroidPackageExporter(col);
+            AnkiProPackageExporter exporter = new AnkiProPackageExporter(col);
             exporter.setIncludeSched(true);
             exporter.setIncludeMedia(true);
             exporter.setDid(did);

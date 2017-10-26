@@ -24,7 +24,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
@@ -113,7 +113,7 @@ public class CompatV10 implements Compat {
 
     public void setFullScreen(AbstractFlashcardViewer a) {
         a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        final int fullscreenMode = Integer.parseInt(AnkiDroidApp.getSharedPrefs(a).getString("fullscreenMode", "0"));
+        final int fullscreenMode = Integer.parseInt(AnkiProApp.getSharedPrefs(a).getString("fullscreenMode", "0"));
         if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
             final LinearLayout answerButtons = (LinearLayout) a.findViewById(R.id.answer_options_layout);
             answerButtons.setVisibility(View.GONE);

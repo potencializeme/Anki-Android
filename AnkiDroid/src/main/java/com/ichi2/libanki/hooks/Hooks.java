@@ -21,7 +21,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.libanki.LaTeX;
 
 import java.util.ArrayList;
@@ -138,7 +138,7 @@ public class Hooks {
     public static Object runFilter(String hook, Object arg, Object... args) {
         if (hooks == null) {
             Timber.e("Hooks object has not been initialized");
-            AnkiDroidApp.sendExceptionReport(new IllegalStateException("Hooks object uninitialized"), "Hooks.runFilter");
+            AnkiProApp.sendExceptionReport(new IllegalStateException("Hooks object uninitialized"), "Hooks.runFilter");
             return arg;
         }
         List<Hook> _hook = hooks.get(hook);

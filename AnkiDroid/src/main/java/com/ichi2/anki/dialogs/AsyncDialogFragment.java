@@ -3,7 +3,7 @@ import android.content.res.Resources;
 import android.os.Message;
 import android.support.v4.app.DialogFragment;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 
 public abstract class AsyncDialogFragment extends DialogFragment {
     /* provide methods for text to show in notification bar when the DialogFragment
@@ -19,6 +19,6 @@ public abstract class AsyncDialogFragment extends DialogFragment {
     }
 
     protected Resources res() {
-        return AnkiDroidApp.getAppResources();
+        return AnkiProApp.getAppResources();
     }
 } 

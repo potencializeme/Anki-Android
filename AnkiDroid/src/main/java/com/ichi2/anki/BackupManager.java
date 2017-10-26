@@ -101,7 +101,7 @@ public class BackupManager {
 
 
     public static boolean performBackupInBackground(final String colPath, int interval, boolean force) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        SharedPreferences prefs = AnkiProApp.getSharedPrefs(AnkiProApp.getInstance().getBaseContext());
         if (prefs.getInt("backupMax", 8) == 0 && !force) {
             Timber.w("backups are disabled");
             return false;
@@ -189,7 +189,7 @@ public class BackupManager {
                     zos.close();
                     bis.close();
                     // Delete old backup files if needed
-                    SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+                    SharedPreferences prefs = AnkiProApp.getSharedPrefs(AnkiProApp.getInstance().getBaseContext());
                     deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
                     // set timestamp of file in order to avoid creating a new backup unless its changed
                     backupFile.setLastModified(colFile.lastModified());

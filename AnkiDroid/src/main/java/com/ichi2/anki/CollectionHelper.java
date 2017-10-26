@@ -115,7 +115,7 @@ public class CollectionHelper {
         try {
             return getCol(context);
         } catch (Exception e) {
-            AnkiDroidApp.sendExceptionReport(e, "CollectionHelper.getColSafe");
+            AnkiProApp.sendExceptionReport(e, "CollectionHelper.getColSafe");
             return null;
         }
     }

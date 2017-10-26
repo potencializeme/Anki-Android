@@ -186,7 +186,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                     mCol.getDecks().save(mDeck);
                 } catch (RuntimeException e) {
                     Timber.e(e, "RuntimeException on saving deck");
-                    AnkiDroidApp.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck");
+                    AnkiProApp.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck");
                     setResult(DeckPicker.RESULT_DB_ERROR);
                     finish();
                 }

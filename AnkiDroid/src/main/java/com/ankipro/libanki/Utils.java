@@ -43,7 +43,7 @@ public class Utils extends com.ichi2.libanki.Utils{
 
     /** Returns a list of apkg-files. */
     public static List<File> getImportableDecks(Context context) {
-        String deckPath = CollectionHelper.getCurrentAnkiProDirectory(context);
+        String deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         File dir = new File(deckPath);
         int deckCount = 0;
         File[] deckList = null;

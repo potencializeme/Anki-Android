@@ -27,7 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.IntentCompat;
 
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.widget.WidgetStatus;
@@ -55,7 +55,7 @@ public class NotificationService extends Service {
         Timber.i("NotificationService: OnStartCommand");
 
         Context context = getApplicationContext();
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(context);
         int minCardsDue = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25"));
         int dueCardsCount = WidgetStatus.fetchDue(context);
         if (dueCardsCount >= minCardsDue) {

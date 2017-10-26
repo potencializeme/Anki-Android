@@ -35,7 +35,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.VideoView;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.ReadText;
 import com.ichi2.compat.CompatHelper;
 
@@ -260,7 +260,7 @@ public class Sound {
             for (String uri_string : mSoundPaths.get(qa)) {
                 Uri soundUri = Uri.parse(uri_string);
                 try {
-                    metaRetriever.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
+                    metaRetriever.setDataSource(AnkiProApp.getInstance().getApplicationContext(), soundUri);
                     length += Long.parseLong(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
                 } catch (IllegalArgumentException iae) {
                     Timber.e(iae, "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist).");
@@ -323,7 +323,7 @@ public class Sound {
                     mMediaPlayer.reset();
                 }
                 if (mAudioManager == null) {
-                    mAudioManager = (AudioManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                    mAudioManager = (AudioManager) AnkiProApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
                 }
                 // Provide a VideoView to the MediaPlayer if valid video file
                 if (isVideo && videoView != null) {
@@ -336,7 +336,7 @@ public class Sound {
                     });
                 }
                 // Setup the MediaPlayer
-                mMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
+                mMediaPlayer.setDataSource(AnkiProApp.getInstance().getApplicationContext(), soundUri);
                 mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
@@ -359,7 +359,7 @@ public class Sound {
 
     private static void configureVideo(VideoView videoView, int videoWidth, int videoHeight) {
         // get the display
-        Context context = AnkiDroidApp.getInstance().getApplicationContext();
+        Context context = AnkiProApp.getInstance().getApplicationContext();
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         // adjust the size of the video so it fits on the screen

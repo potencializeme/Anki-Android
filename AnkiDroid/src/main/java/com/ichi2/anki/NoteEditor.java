@@ -335,7 +335,7 @@ public class NoteEditor extends AnkiActivity {
         Intent intent = getIntent();
         Timber.d("onCollectionLoaded: caller: %d", mCaller);
 
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
 
         registerExternalStorageListener();
 
@@ -1092,7 +1092,7 @@ public class NoteEditor extends AnkiActivity {
 
         // Use custom font if selected from preferences
         Typeface mCustomTypeface = null;
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
         String customFont = preferences.getString("browserEditorFont", "");
         if (!customFont.equals("")) {
             mCustomTypeface = AnkiFont.getTypeface(this, customFont);

@@ -101,7 +101,7 @@ public class Info extends AnkiActivity {
                 setResult(RESULT_OK);
                 switch (mType) {
                     case TYPE_NEW_VERSION:
-                        AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
+                        AnkiProApp.getSharedPrefs(Info.this.getBaseContext()).edit()
                                 .putString("lastVersion", VersionUtils.getPkgVersionName()).commit();
                         break;
                 }

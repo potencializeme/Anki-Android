@@ -20,7 +20,7 @@ package com.ichi2.libanki.sync;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
@@ -184,7 +184,7 @@ public class MediaSyncer {
                     }
 
                     mCon.publishProgress(String.format(
-                            AnkiDroidApp.getAppResources().getString(R.string.sync_media_changes_count), toSend));
+                            AnkiProApp.getAppResources().getString(R.string.sync_media_changes_count), toSend));
 
                     JSONArray changes = mServer.uploadChanges(zip);
                     int processedCnt = changes.getInt(0);
@@ -249,7 +249,7 @@ public class MediaSyncer {
                     fnames = fnames.subList(cnt, fnames.size());
                 }
                 mCon.publishProgress(String.format(
-                        AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count), mDownloadCount));
+                        AnkiProApp.getAppResources().getString(R.string.sync_media_downloaded_count), mDownloadCount));
             } catch (IOException | UnknownHttpResponseException e) {
                 Timber.e(e, "Error downloading media files");
                 throw new RuntimeException(e);

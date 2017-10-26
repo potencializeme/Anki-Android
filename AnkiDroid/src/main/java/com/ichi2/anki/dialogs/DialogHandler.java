@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
@@ -93,14 +93,14 @@ public class DialogHandler extends Handler {
                 @Override
                 public void run() {
                     // Bypass the check once the user confirms
-                    CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance()).modSchemaNoCheck();
+                    CollectionHelper.getInstance().getCol(AnkiProApp.getInstance()).modSchemaNoCheck();
                 }
             };
             dialog.setConfirm(confirm);
             dialog.setArgs(msgData.getString("message"));
             (mActivity.get()).showDialogFragment(dialog);
         } else if (msg.what == MSG_DO_SYNC) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mActivity.get());
+            SharedPreferences preferences = AnkiProApp.getSharedPrefs(mActivity.get());
             Resources res = mActivity.get().getResources();
             String hkey = preferences.getString("hkey", "");
             boolean limited = Utils.intNow(1000) - preferences.getLong("lastSyncTime", 0) < INTENT_SYNC_MIN_INTERVAL;

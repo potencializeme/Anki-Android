@@ -21,7 +21,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
@@ -224,10 +224,10 @@ public class Syncer {
         } catch (JSONException | IllegalStateException e) {
             throw new RuntimeException(e);
         } catch (OutOfMemoryError e) {
-            AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
+            AnkiProApp.sendExceptionReport(e, "Syncer-sync");
             return new Object[] { "OutOfMemoryError" };
         } catch (IOException e) {
-            AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
+            AnkiProApp.sendExceptionReport(e, "Syncer-sync");
             return new Object[] { "IOException" };
         }
         return new Object[] { "success" };

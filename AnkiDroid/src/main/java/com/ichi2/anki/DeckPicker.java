@@ -60,12 +60,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ankipro.anki.BackupAnkiDroidManager;
-import com.ankipro.anki.AnkiDroidAccount;
+import com.ankipro.anki.BackupAnkiProManager;
+import com.ankipro.anki.AnkiProAccount;
 import com.ankipro.anki.dialogs.DatabaseErrorDialog;
 import com.ankipro.anki.dialogs.ExportDialog;
 import com.ankipro.anki.dialogs.ImportDialog;
-import com.ankipro.libanki.importer.AnkiDroidPackageImporter;
+import com.ankipro.libanki.importer.AnkiProPackageImporter;
 import com.ankipro.model.Produto;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -256,7 +256,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            AnkiDroidPackageImporter imp = (AnkiDroidPackageImporter) result.getObjArray()[0];
+            AnkiProPackageImporter imp = (AnkiProPackageImporter) result.getObjArray()[0];
             showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
             updateDeckList();
         }
@@ -367,7 +367,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
         // Open Collection on UI thread while splash screen is showing
         boolean colOpen = firstCollectionOpen();
 
@@ -446,7 +446,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (!CollectionHelper.hasStorageAccessPermission(this)) {
                 // This case is handled by onRequestPermissionsResult() so don't need to do anything
                 System.out.print("CHECK PERMISSION");
-            } else if (!AnkiDroidApp.isSdCardMounted()) {
+            } else if (!AnkiProApp.isSdCardMounted()) {
                 // SD card not mounted
                 onSdCardNotMounted();
             } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(this)) {
@@ -549,7 +549,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.deck_picker, menu);
-        boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
+        boolean sdCardAvailable = AnkiProApp.isSdCardMounted();
         //menu.findItem(R.id.action_sync).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
@@ -649,14 +649,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.i("DeckPicker:: Export collection button pressed");
                 String msg = getResources().getString(R.string.confirm_apkg_export);
 
-                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+                SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
                 String hkey = preferences.getString("username", "");
                 if (hkey.length() == 0) {
                     Timber.d("Going to register page");
                     loginToSyncServer();
                 }else {
                     List <Produto> products_list;
-                    String produts_str = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("ninjaproducts", "");
+                    String produts_str = AnkiProApp.getSharedPrefs(getBaseContext()).getString("ninjaproducts", "");
 
                     Gson gson = new Gson();
                     Type listOfTestObject = new TypeToken<List<Produto>>() {
@@ -701,10 +701,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         if (requestCode == REPORT_ERROR) {
-            showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 4);
+            showStartupScreensAndDialogs(AnkiProApp.getSharedPrefs(getBaseContext()), 4);
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
             if (resultCode == RESULT_OK) {
-                showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()),
+                showStartupScreensAndDialogs(AnkiProApp.getSharedPrefs(getBaseContext()),
                         requestCode == SHOW_INFO_WELCOME ? 2 : 3);
             } else {
                 finishWithAnimation();
@@ -723,10 +723,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (requestCode == REQUEST_BROWSE_CARDS) {
             // Store the selected deck after opening browser
             if (intent != null && intent.getBooleanExtra("allDecksSelected", false)) {
-                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", -1L).apply();
+                AnkiProApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", -1L).apply();
             } else {
                 long selectedDeck = getCol().getDecks().selected();
-                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", selectedDeck).apply();
+                AnkiProApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", selectedDeck).apply();
             }
         } else if (requestCode == REQUEST_PATH_UPDATE) {
             // The collection path was inaccessible on startup so just close the activity and let user restart
@@ -738,7 +738,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.length == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(this), 0);
+                showStartupScreensAndDialogs(AnkiProApp.getSharedPrefs(this), 0);
             } else {
                 // User denied access to the SD card so show error toast and finish activity
                 Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
@@ -816,7 +816,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void automaticSync() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
 
         // Check whether the option is selected, the user is signed in and last sync was AUTOMATIC_SYNC_TIME ago
         // (currently 10 minutes)
@@ -862,7 +862,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     private void onFinishedStartup() {
         // create backup in background if needed
-        BackupAnkiDroidManager.performBackupInBackground(getCol().getPath());
+        BackupAnkiProManager.performBackupInBackground(getCol().getPath());
 
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
@@ -903,7 +903,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
-        if (!BackupAnkiDroidManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
+        if (!BackupAnkiProManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             // Not enough space to do backup
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
         } else if (preferences.getBoolean("noSpaceLeft", false)) {
@@ -973,8 +973,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
 
             // Check if preference upgrade or database check required, otherwise go to new feature screen
-            int upgradePrefsVersion = AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
-            int upgradeDbVersion = AnkiDroidApp.CHECK_DB_AT_VERSION;
+            int upgradePrefsVersion = AnkiProApp.CHECK_PREFERENCES_AT_VERSION;
+            int upgradeDbVersion = AnkiProApp.CHECK_DB_AT_VERSION;
 
             if (previous < upgradeDbVersion || previous < upgradePrefsVersion) {
                 if (previous < upgradePrefsVersion && current >= upgradePrefsVersion) {
@@ -1019,7 +1019,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void upgradePreferences(int previousVersionCode) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
         // clear all prefs if super old version to prevent any errors
         if (previousVersionCode < 20300130) {
             preferences.edit().clear().commit();
@@ -1134,13 +1134,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     private void showSyncLogMessage(int messageResource, String syncMessage) {
         if (mActivityPaused) {
-            Resources res = AnkiDroidApp.getAppResources();
+            Resources res = AnkiProApp.getAppResources();
             showSimpleNotification(res.getString(R.string.app_name), res.getString(messageResource));
         } else {
             if (syncMessage == null || syncMessage.length() == 0) {
                 UIUtils.showSimpleSnackbar(this, messageResource, false);
             } else {
-                Resources res = AnkiDroidApp.getAppResources();
+                Resources res = AnkiProApp.getAppResources();
                 showSimpleMessageDialog(res.getString(messageResource), syncMessage, false);
             }
         }
@@ -1166,7 +1166,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback method to submit error report
     public void sendErrorReport() {
-        AnkiDroidApp.sendExceptionReport(new RuntimeException(), "DeckPicker.sendErrorReport");
+        AnkiProApp.sendExceptionReport(new RuntimeException(), "DeckPicker.sendErrorReport");
     }
 
 
@@ -1339,7 +1339,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     @Override
     public void sync(String syncConflictResolution) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
         if (hkey.length() == 0) {
             mPullToSyncWrapper.setRefreshing(false);
@@ -1376,7 +1376,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             countDown = 0;
             // Store the current time so that we don't bother the user with a sync prompt for another 10 minutes
             // Note: getLs() in Libanki doesn't take into account the case when no changes were found, or sync cancelled
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
             final long syncStartTime = System.currentTimeMillis();
             preferences.edit().putLong("lastSyncTime", syncStartTime).apply();
 
@@ -1476,7 +1476,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             } catch (IllegalArgumentException e) {
                 Timber.e(e, "Could not dismiss mProgressDialog. The Activity must have been destroyed while the AsyncTask was running");
-                AnkiDroidApp.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog");
+                AnkiProApp.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog");
             }
             syncMessage = data.message;
             if (!data.success) {
@@ -1485,7 +1485,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     String resultType = (String) result[0];
                     if (resultType.equals("badAuth")) {
                         // delete old auth information
-                        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+                        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
                         Editor editor = preferences.edit();
                         editor.putString("username", "");
                         editor.putString("hkey", "");
@@ -1635,7 +1635,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void loginToSyncServer() {
-        Intent myAccount = new Intent(this, AnkiDroidAccount.class);
+        Intent myAccount = new Intent(this, AnkiProAccount.class);
         myAccount.putExtra("notLoggedIn", true);
         startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_SYNC, ActivityTransitionAnimation.FADE);
     }
@@ -1667,7 +1667,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (data.success) {
                 Timber.e("Concurseiro Ninja Account - Refresh products - Login success, code %d", data.returnType);
 
-                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getApplicationContext());
+                SharedPreferences preferences = AnkiProApp.getSharedPrefs(AnkiProApp.getInstance().getApplicationContext());
                 SharedPreferences.Editor editor = preferences.edit();
 
                 editor.remove("ninjaproducts");
@@ -1712,9 +1712,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd -- update products list");
-        String username = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("username", "");
-        String hkey = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("hkey", "");
-        String password = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("password", "");
+        String username = AnkiProApp.getSharedPrefs(getBaseContext()).getString("username", "");
+        String hkey = AnkiProApp.getSharedPrefs(getBaseContext()).getString("hkey", "");
+        String password = AnkiProApp.getSharedPrefs(getBaseContext()).getString("password", "");
 
         if (hkey.length() == 0) {
             Timber.d("Going to register page");
@@ -1722,8 +1722,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }else {
 
             Timber.d("importAdd -- importing files");
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            String hkey_alt = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("hkey", "");
+            SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
+            String hkey_alt = AnkiProApp.getSharedPrefs(getBaseContext()).getString("hkey", "");
             if (hkey_alt.length() == 0) {
                 Timber.d("Going to register page");
                 loginToSyncServer();
@@ -1774,7 +1774,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             //Open current products list
             List<Produto> products_list;
-            String produts_str = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("ninjaproducts", "");
+            String produts_str = AnkiProApp.getSharedPrefs(getBaseContext()).getString("ninjaproducts", "");
 
             Gson gson = new Gson();
             Type listOfTestObject = new TypeToken<List<Produto>>() {
@@ -1957,7 +1957,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     protected void openCardBrowser() {
         Intent cardBrowser = new Intent(this, CardBrowser.class);
         cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
-        long lastDeckId = AnkiDroidApp.getSharedPrefs(this).getLong("browserDeckIdFromDeckPicker", -1L);
+        long lastDeckId = AnkiProApp.getSharedPrefs(this).getLong("browserDeckIdFromDeckPicker", -1L);
         cardBrowser.putExtra("defaultDeckId", lastDeckId);
         startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
     }
@@ -2162,7 +2162,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("username", "");
         if (hkey.length() == 0) {
             Timber.d("Going to register page");
@@ -2170,7 +2170,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }else {
             List <Produto> products_list;
             try {
-                String produts_str = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("ninjaproducts", "");
+                String produts_str = AnkiProApp.getSharedPrefs(getBaseContext()).getString("ninjaproducts", "");
 
                 Gson gson = new Gson();
                 Type listOfTestObject = new TypeToken<List<Produto>>() {

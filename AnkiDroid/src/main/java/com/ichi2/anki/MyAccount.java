@@ -56,7 +56,7 @@ public class MyAccount extends AnkiActivity {
     private void switchToState(int newState) {
         switch (newState) {
             case STATE_LOGGED_IN:
-                String username = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("username", "");
+                String username = AnkiProApp.getSharedPrefs(getBaseContext()).getString("username", "");
                 mUsernameLoggedIn.setText(username);
                 mToolbar = (Toolbar) mLoggedIntoMyAccountView.findViewById(R.id.toolbar);
                 if (mToolbar!= null) {
@@ -87,7 +87,7 @@ public class MyAccount extends AnkiActivity {
         mayOpenUrl(Uri.parse(getResources().getString(R.string.register_url)));
         initAllContentViews();
 
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
         if (preferences.getString("hkey", "").length() > 0) {
             switchToState(STATE_LOGGED_IN);
         } else {
@@ -113,7 +113,7 @@ public class MyAccount extends AnkiActivity {
     // }
 
     private void saveUserInformation(String username, String hkey, String password) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         editor.putString("username", username);
         editor.putString("hkey", hkey);
@@ -145,7 +145,7 @@ public class MyAccount extends AnkiActivity {
 
 
     private void logout() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         editor.putString("username", "");
         editor.putString("hkey", "");

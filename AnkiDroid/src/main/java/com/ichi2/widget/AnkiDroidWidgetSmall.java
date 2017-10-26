@@ -29,7 +29,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.ankipro.anki.IntentHandler;
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 
@@ -53,7 +53,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
         Timber.d("SmallWidget: Widget enabled");
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", true).commit();
     }
 
@@ -62,7 +62,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     public void onDisabled(Context context) {
         super.onDisabled(context);
         Timber.d("SmallWidget: Widget disabled");
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit();
     }
 
@@ -101,7 +101,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_small);
 
-            boolean mounted = AnkiDroidApp.isSdCardMounted();
+            boolean mounted = AnkiProApp.isSdCardMounted();
             if (!mounted) {
                 updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
                 updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);

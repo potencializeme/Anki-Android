@@ -60,7 +60,7 @@ public class AnkiProPackageImporter extends Anki2Importer {
                 Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{"collection.anki2","collection.ankicfc", "media","ankipro_keys"}, null);
             } catch (IOException e) {
                 Timber.e(e, "Failed to unzip apkg.");
-                mLog.add(getRes().getString(R.string.import_log_no_ankipro));
+                mLog.add(getRes().getString(R.string.import_log_no_ankidroid));
                 return;
             }
             String colpath = new File(tempDir, "collection.ankicfc").getAbsolutePath();

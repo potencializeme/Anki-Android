@@ -23,7 +23,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 
 public class NumberRangePreference extends EditTextPreference {
 
@@ -125,7 +125,7 @@ public class NumberRangePreference extends EditTextPreference {
      * This method should only be called once from the constructor.
      */
     private int getMinFromAttributes(AttributeSet attrs) {
-        return attrs == null ? 0 : attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0);
+        return attrs == null ? 0 : attrs.getAttributeIntValue(AnkiProApp.XML_CUSTOM_NAMESPACE, "min", 0);
     }
 
 
@@ -135,7 +135,7 @@ public class NumberRangePreference extends EditTextPreference {
      * This method should only be called once from the constructor.
      */
     private int getMaxFromAttributes(AttributeSet attrs) {
-        return attrs == null ? Integer.MAX_VALUE : attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max",
+        return attrs == null ? Integer.MAX_VALUE : attrs.getAttributeIntValue(AnkiProApp.XML_CUSTOM_NAMESPACE, "max",
                 Integer.MAX_VALUE);
     }
 

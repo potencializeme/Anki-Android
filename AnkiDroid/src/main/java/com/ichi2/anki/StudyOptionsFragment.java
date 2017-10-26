@@ -373,7 +373,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             menu.findItem(R.id.action_undo).setVisible(false);
         } else {
             menu.findItem(R.id.action_undo).setVisible(true);
-            Resources res = AnkiDroidApp.getAppResources();
+            Resources res = AnkiProApp.getAppResources();
             menu.findItem(R.id.action_undo).setTitle(res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res)));
         }
         // Set the back button listener
@@ -461,7 +461,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
     public SharedPreferences restorePreferences() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getActivity().getBaseContext());
         return preferences;
     }
 

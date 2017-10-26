@@ -25,7 +25,7 @@ import android.os.PowerManager;
 import android.util.Xml;
 
 import com.ankipro.model.Produto;
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.MediaSyncException;
@@ -84,7 +84,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     public Connection() {
         sIsCancelled = false;
         sIsCancellable = false;
-        Context context = AnkiDroidApp.getInstance().getApplicationContext();
+        Context context = AnkiProApp.getInstance().getApplicationContext();
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Connection");
     }
@@ -207,7 +207,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        String onlineUrl = "http://ankidroid.com/ws";
+        String onlineUrl = "http://ankipro.com/ws";
         HttpURLConnection urlConnection = null;
         try {
             String charset = "UTF-8";
@@ -282,7 +282,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             // Ask user to report all bugs which aren't timeout errors
             Timber.e("doInBackgroundLoginNinja - error: "+e2.getMessage());
             if (!timeoutOccured(e2)) {
-                AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
+                AnkiProApp.sendExceptionReport(e2, "doInBackgroundLogin");
             }
             data.success = false;
             data.result = new Object[] {"ninjaConnectionError" };
@@ -316,7 +316,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
         // Use safe version that catches exceptions so that full sync is still possible
-        Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
+        Collection col = CollectionHelper.getInstance().getColSafe(AnkiProApp.getInstance());
 
         boolean colCorruptFullSync = false;
         if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
@@ -407,7 +407,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         }
                     }
                 } catch (OutOfMemoryError e) {
-                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
+                    AnkiProApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
                     data.result = new Object[] { "OutOfMemoryError" };
                     return data;
@@ -417,7 +417,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     } else if (e.getMessage().equals("UserAbortedSync")) {
                         data.result = new Object[] {"UserAbortedSync" };
                     } else {
-                        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
+                        AnkiProApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                         data.result = new Object[] { "IOException" };
                     }
                     data.success = false;
@@ -440,14 +440,14 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 try {
                     ret = mediaClient.sync();
                     if (ret == null) {
-                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
+                        mediaError = AnkiProApp.getAppResources().getString(R.string.sync_media_error);
                     } else {
                         if (ret.equals("noChanges")) {
                             publishProgress(R.string.sync_media_no_changes);
                             noMediaChanges = true;
                         }
                         if (ret.equals("sanityFailed")) {
-                            mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
+                            mediaError = AnkiProApp.getAppResources().getString(R.string.sync_media_sanity_failed);
                         } else {
                             publishProgress(R.string.sync_media_success);
                         }
@@ -458,7 +458,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     } else if (e.getMessage().equals("UserAbortedSync")) {
                         data.result = new Object[] {"UserAbortedSync" };
                     } else {
-                        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
+                        AnkiProApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                     }
                     mediaError = e.getLocalizedMessage();
                 }
@@ -476,7 +476,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Timber.e("Media sync rejected by server");
             data.success = false;
             data.result = new Object[] {"mediaSyncServerError"};
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundSync");
             return data;
         } catch (UnknownHttpResponseException e) {
             Timber.e("doInBackgroundSync -- unknown response code error");
@@ -497,7 +497,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             } else if (e.getMessage().equals("UserAbortedSync")) {
                 data.result = new Object[] {"UserAbortedSync" };
             } else {
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
+                AnkiProApp.sendExceptionReport(e, "doInBackgroundSync");
                 data.result = new Object[] {e.getLocalizedMessage()};
             }
             return data;
@@ -526,7 +526,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
     public static boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
+        ConnectivityManager cm = (ConnectivityManager) AnkiProApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
@@ -763,7 +763,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String username = (String) data.data[0];
         String password = (String) data.data[1];
 
-        String onlineUrl = "http://ankidroid.com/ws";
+        String onlineUrl = "http://ankipro.com/ws";
         HttpURLConnection urlConnection = null;
         try {
             String charset = "UTF-8";
@@ -838,7 +838,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             // Ask user to report all bugs which aren't timeout errors
             Timber.e("doInBackgroundLoginNinja - error: "+e2.getMessage());
             if (!timeoutOccured(e2)) {
-                AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
+                AnkiProApp.sendExceptionReport(e2, "doInBackgroundLogin");
             }
             data.success = false;
             data.result = new Object[] {"ninjaConnectionError" };

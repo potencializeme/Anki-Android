@@ -28,7 +28,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -81,7 +81,7 @@ public class ContentProviderTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        Log.i(AnkiDroidApp.TAG, "setUp()");
+        Log.i(AnkiProApp.TAG, "setUp()");
         mCreatedNotes = new ArrayList<>();
         final Collection col = CollectionHelper.getInstance().getCol(getContext());
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
@@ -120,7 +120,7 @@ public class ContentProviderTest extends AndroidTestCase {
      */
     @Override
     protected void tearDown() throws Exception {
-        Log.i(AnkiDroidApp.TAG, "tearDown()");
+        Log.i(AnkiProApp.TAG, "tearDown()");
         final Collection col = CollectionHelper.getInstance().getCol(getContext());
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);

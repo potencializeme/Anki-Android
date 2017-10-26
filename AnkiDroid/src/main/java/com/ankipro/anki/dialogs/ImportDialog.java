@@ -65,7 +65,7 @@ public class ImportDialog extends com.ichi2.anki.dialogs.ImportDialog {
             case DIALOG_IMPORT_HINT:
                 // Instruct the user that they need to put their APKG files into the AnkiPro directory
                 return builder.title(res.getString(R.string.import_title))
-                        .content(res.getString(R.string.import_hint, CollectionHelper.getCurrentAnkiProDirectory(getActivity())))
+                        .content(res.getString(R.string.import_hint, CollectionHelper.getCurrentAnkiDroidDirectory(getActivity())))
                         .positiveText(res.getString(R.string.dialog_ok))
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .callback(new MaterialDialog.ButtonCallback() {

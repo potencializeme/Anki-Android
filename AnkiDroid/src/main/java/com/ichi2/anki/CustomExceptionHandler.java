@@ -111,7 +111,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             // mInformation.put("User", android.os.Build.USER);
             mInformation.put("TotalInternalMemory", Long.toString(getTotalInternalMemorySize()));
             mInformation.put("AvailableInternalMemory", Long.toString(getAvailableInternalMemorySize()));
-            mInformation.put("Locale", AnkiDroidApp.getAppResources().getConfiguration().locale.toString());
+            mInformation.put("Locale", AnkiProApp.getAppResources().getConfiguration().locale.toString());
             Timber.i("Information collected");
         } catch (Exception e) {
             Timber.i(e.toString());

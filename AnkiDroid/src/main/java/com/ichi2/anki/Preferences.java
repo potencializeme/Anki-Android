@@ -247,7 +247,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         screen.findPreference("fullscreenMode");
                 fullscreenPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, final Object newValue) {
-                        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(Preferences.this);
+                        SharedPreferences prefs = AnkiProApp.getSharedPrefs(Preferences.this);
                         if (prefs.getBoolean("gestures", false) || !newValue.equals("2")) {
                             return true;
                         } else {
@@ -284,7 +284,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 Preference reset_custom_buttons = screen.findPreference("reset_custom_buttons");
                 reset_custom_buttons.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
-                        SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(getBaseContext()).edit();
+                        SharedPreferences.Editor edit = AnkiProApp.getSharedPrefs(getBaseContext()).edit();
                         edit.remove("customButtonUndo");
                         edit.remove("customButtonMarkCard");
                         edit.remove("customButtonEditCard");
@@ -531,12 +531,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 }
                 case "reportErrorMode": {
                     String value = prefs.getString("reportErrorMode", "");
-                    AnkiDroidApp.getInstance().setAcraReportingMode(value);
-                    AnkiDroidApp.getSharedPrefs(this).edit().remove("sentExceptionReports").apply();    // clear cache
+                    AnkiProApp.getInstance().setAcraReportingMode(value);
+                    AnkiProApp.getSharedPrefs(this).edit().remove("sentExceptionReports").apply();    // clear cache
                     break;
                 }
                 case "syncAccount": {
-                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+                    SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
                     String username = preferences.getString("username", "");
                     Preference syncAccount = screen.findPreference("syncAccount");
                     if (syncAccount != null) {
@@ -593,14 +593,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         if (pref.getKey().equals("about_dialog_preference")) {
             pref.setSummary(getResources().getString(R.string.about_version) + " " + VersionUtils.getPkgVersionName());
         } else if (pref.getKey().equals("custom_sync_server_link")) {
-            if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("useCustomSyncServer", false)) {
+            if (!AnkiProApp.getSharedPrefs(this).getBoolean("useCustomSyncServer", false)) {
                 pref.setSummary(R.string.disabled);
             } else {
-                pref.setSummary(AnkiDroidApp.getSharedPrefs(this).getString("syncBaseUrl", ""));
+                pref.setSummary(AnkiProApp.getSharedPrefs(this).getString("syncBaseUrl", ""));
             }
         }
           else if (pref.getKey().equals("advanced_statistics_link")) {
-            if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("advanced_statistics_enabled", false)) {
+            if (!AnkiProApp.getSharedPrefs(this).getBoolean("advanced_statistics_enabled", false)) {
                 pref.setSummary(R.string.disabled);
             } else {
                 pref.setSummary(R.string.enabled);

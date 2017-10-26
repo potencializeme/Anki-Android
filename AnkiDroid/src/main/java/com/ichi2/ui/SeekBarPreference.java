@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 
 public class SeekBarPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
     private static final String androidns = "http://schemas.android.com/apk/res/android";
@@ -38,8 +38,8 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
         mSuffix = attrs.getAttributeValue(androidns, "text");
         mDefault = attrs.getAttributeIntValue(androidns, "defaultValue", 0);
         mMax = attrs.getAttributeIntValue(androidns, "max", 100);
-        mMin = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0);
-        mInterval = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1);
+        mMin = attrs.getAttributeIntValue(AnkiProApp.XML_CUSTOM_NAMESPACE, "min", 0);
+        mInterval = attrs.getAttributeIntValue(AnkiProApp.XML_CUSTOM_NAMESPACE, "interval", 1);
     }
 
 
