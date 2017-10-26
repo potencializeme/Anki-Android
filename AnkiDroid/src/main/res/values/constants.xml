@@ -22,7 +22,7 @@
     <!-- App name -->
     <string name="app_name">AnkiDroid</string>
     <!-- Text to be shown in preference summary -->
-    <string name="preference_summary_literal">XXX</string>
+    <string name="preference_summary_literal" translatable="false">XXX</string>
     <!-- Used in deck preferences -->
     <string-array name="dictionary_labels">
         <item>None</item>
@@ -137,6 +137,9 @@
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
     <string name="changelog_url">https://ankidroid.org/docs/changelog.html</string>
+    <string name="resetninja_pw_url">https://www.ankidroid.com/</string>
+    <string name="link_ninja_register">https://www.ankidroid.com/</string>
+    <string name="link_ninja_buy">https://www.ankidroid.com/</string>
 
     <string-array name="leech_action_values">
         <item>0</item>
@@ -146,7 +149,7 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-    <string name="deck_conf_percent">XXX \%%</string>
+    <string name="deck_conf_percent" translatable="false">XXX \%%</string>
 
     <string-array name="cram_deck_conf_order_values">
         <item>0</item>
@@ -190,7 +193,7 @@
         <item>@string/settings</item>
         <item>@string/night_mode</item>
         <item>@string/help</item>
-        <item>@string/send_feedback</item>
+        <!--item>@string/send_feedback</item-->
     </string-array>
 
     <string-array name="day_theme_values">
