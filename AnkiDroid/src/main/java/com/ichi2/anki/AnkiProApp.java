@@ -50,12 +50,14 @@ import timber.log.Timber;
 
 /**
  * Application class.
+ *         formUriBasicAuthLogin = "admin",
+ formUriBasicAuthPassword = "bb72e9c1eb81",
  */
 @ReportsCrashes(
         reportDialogClass = AnkiDroidCrashReportDialog.class,
         httpMethod = HttpSender.Method.PUT,
         reportType = HttpSender.Type.JSON,
-        formUri = "http://ankipro.com/webservice/ankierror/getform.php",
+        formUri = "https://couchdb-ed8c8c.smileupps.com/acra-myapp/report",
         mode = ReportingInteractionMode.DIALOG,
         resDialogCommentPrompt =  R.string.empty_string,
         resDialogTitle =  R.string.feedback_title,
