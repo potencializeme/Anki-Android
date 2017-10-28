@@ -49,7 +49,7 @@ public class IntentHandler extends Activity {
             // We want to go immediately to DeckPicker, clearing any history in the process
             Timber.i("IntentHandler/ User requested to view a file");
             boolean successful = false;
-            String errorMessage = getResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing");
+            String errorMessage = getResources().getString(R.string.import_error_content_provider, AnkiProApp.getManualUrl() + "#importing");
             // If the file is being sent from a content provider we need to read the content before we can open the file
             if (intent.getData().getScheme().equals("content")) {
                 // Get the original filename from the content provider URI
@@ -73,7 +73,7 @@ public class IntentHandler extends Activity {
                         Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue");
                     } else {
                         Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile");
-                        AnkiDroidApp.sendExceptionReport(new RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed");
+                        AnkiProApp.sendExceptionReport(new RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed");
                     }
                 }
 
@@ -88,7 +88,7 @@ public class IntentHandler extends Activity {
                     if (successful) {
                         sendShowImportFileDialogMsg(tempOutDir);
                     } else {
-                        AnkiDroidApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
+                        AnkiProApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
                     }
                 }
             } else if (intent.getData().getScheme().equals("file")) {
@@ -149,7 +149,7 @@ public class IntentHandler extends Activity {
 
 
     /**
-     * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
+     * Send a Message to AnkiProApp so that the DialogMessageHandler shows the Import apkg dialog.
      * @param path path to apkg file which will be imported
      */
     private void sendShowImportFileDialogMsg(String path) {
@@ -169,18 +169,18 @@ public class IntentHandler extends Activity {
             // Otherwise show confirmation dialog asking to confirm import with add
             handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG;
         }
-        // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
+        // Store the message in AnkiProApp message holder, which is loaded later in AnkiActivity.onResume
         DialogHandler.storeMessage(handlerMessage);
     }
 
     /**
-     * Send a Message to AnkiDroidApp so that the DialogMessageHandler forces a sync
+     * Send a Message to AnkiProApp so that the DialogMessageHandler forces a sync
      */
     private void sendDoSyncMsg() {
         // Create a new message for DialogHandler
         Message handlerMessage = Message.obtain();
         handlerMessage.what = DialogHandler.MSG_DO_SYNC;
-        // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
+        // Store the message in AnkiProApp message holder, which is loaded later in AnkiActivity.onResume
         DialogHandler.storeMessage(handlerMessage);
     }
 

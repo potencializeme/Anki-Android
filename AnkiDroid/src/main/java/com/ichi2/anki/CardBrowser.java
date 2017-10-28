@@ -225,12 +225,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 try {
                     if (mOrder == 0) {
                         getCol().getConf().put("sortType", fSortTypes[1]);
-                        AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                        AnkiProApp.getSharedPrefs(getBaseContext()).edit()
                                 .putBoolean("cardBrowserNoSorting", true)
                                 .commit();
                     } else {
                         getCol().getConf().put("sortType", fSortTypes[mOrder]);
-                        AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                        AnkiProApp.getSharedPrefs(getBaseContext()).edit()
                                 .putBoolean("cardBrowserNoSorting", false)
                                 .commit();
                     }
@@ -361,7 +361,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         registerExternalStorageListener();
 
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(getBaseContext());
 
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
@@ -414,14 +414,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 R.array.browser_column1_headings, android.R.layout.simple_spinner_item);
         column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cardsColumn1Spinner.setAdapter(column1Adapter);
-        mColumn1Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn1", 0);
+        mColumn1Index = AnkiProApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn1", 0);
         cardsColumn1Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn1Index) {
                     mColumn1Index = pos;
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                    AnkiProApp.getSharedPrefs(AnkiProApp.getInstance().getBaseContext()).edit()
                             .putInt("cardBrowserColumn1", mColumn1Index).commit();
                     String[] fromMap = mCardsAdapter.getFromMapping();
                     fromMap[0] = COLUMN1_KEYS[mColumn1Index];
@@ -435,7 +435,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         });
         // Load default value for column2 selection
-        mColumn2Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
+        mColumn2Index = AnkiProApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
         // Setup the column 2 heading as a spinner so that users can easily change the column type
         Spinner cardsColumn2Spinner = (Spinner) findViewById(R.id.browser_column2_spinner);
         ArrayAdapter<CharSequence> column2Adapter = ArrayAdapter.createFromResource(this,
@@ -449,7 +449,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn2Index) {
                     mColumn2Index = pos;
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                    AnkiProApp.getSharedPrefs(AnkiProApp.getInstance().getBaseContext()).edit()
                             .putInt("cardBrowserColumn2", mColumn2Index).commit();
                     String[] fromMap = mCardsAdapter.getFromMapping();
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index];
@@ -729,7 +729,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void showTagsDialog() {
-        TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
+        TagsDialog dialog = TagsDialog.newInstance(
             TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<>(getCol().getTags().all()));
         dialog.setTagsDialogListener(new TagsDialogListener() {
             @Override

@@ -24,7 +24,7 @@ import android.database.Cursor;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -307,7 +307,7 @@ public class Collection {
                     }
                 }
             } catch (RuntimeException e) {
-                AnkiDroidApp.sendExceptionReport(e, "closeDB");
+                AnkiProApp.sendExceptionReport(e, "closeDB");
             }
             if (!mServer) {
                 CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDb.getDatabase());
@@ -1466,7 +1466,7 @@ public class Collection {
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
         }
         // and finally, optimize

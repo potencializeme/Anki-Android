@@ -21,10 +21,11 @@ package com.ichi2.async;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.PowerManager;
+import android.util.Xml;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ankipro.model.Produto;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.MediaSyncException;
@@ -37,13 +38,21 @@ import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -51,8 +60,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public static final int TASK_TYPE_LOGIN = 0;
     public static final int TASK_TYPE_SYNC = 1;
+    public static final int TASK_TYPE_LOGIN_NINJA =2;
     public static final int CONN_TIMEOUT = 30000;
 
+    private static final String ns = null;
 
     private static Connection sInstance;
     private TaskListener mListener;
@@ -73,7 +84,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     public Connection() {
         sIsCancelled = false;
         sIsCancellable = false;
-        Context context = AnkiDroidApp.getInstance().getApplicationContext();
+        Context context = AnkiProApp.getInstance().getApplicationContext();
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Connection");
     }
@@ -87,7 +98,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
 
         try {
-            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            if ((sInstance != null) && (sInstance.getStatus() != Status.FINISHED)) {
                 sInstance.get();
             }
         } catch (Exception e) {
@@ -134,7 +145,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     /*
      * Runs on GUI thread
      */
-    @Override
     protected void onPostExecute(Payload data) {
         super.onPostExecute(data);
         // Sync has ended so release the wake lock
@@ -169,7 +179,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    @Override
     protected Payload doInBackground(Payload... params) {
         super.doInBackground(params);
         if (params.length != 1) {
@@ -187,6 +196,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             case TASK_TYPE_SYNC:
                 return doInBackgroundSync(data);
 
+            case TASK_TYPE_LOGIN_NINJA:
+                return doInBackgroundRefreshProducts(data);
             default:
                 return null;
         }
@@ -196,49 +207,91 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        HttpSyncer server = new RemoteServer(this, null);
-        HttpResponse ret;
+        String onlineUrl = "http://ankipro.com/ws";
+        HttpURLConnection urlConnection = null;
         try {
-            ret = server.hostKey(username, password);
-        } catch (UnknownHttpResponseException e) {
-            data.success = false;
-            data.result = new Object[] { "error", e.getResponseCode(), e.getMessage() };
-            return data;
-        } catch (Exception e2) {
-            // Ask user to report all bugs which aren't timeout errors
-            if (!timeoutOccured(e2)) {
-                AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
+            String charset = "UTF-8";
+            String query = String.format("username=%s&passwd=%s",
+                    URLEncoder.encode(username, charset),
+                    URLEncoder.encode(password, charset));
+            //String dataUrlParameters = "?username="+username+"&password="+password;
+
+            URL url = new URL(onlineUrl+ "?" + query);//use a proper url instead of onlineUrl
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Accept-Charset", charset);
+            urlConnection.setDoInput(true); // true if we want to read server's response
+            urlConnection.setDoOutput(false); // false indicates this is a GET request
+            urlConnection.setRequestProperty("Content-Type", "text/xml");
+
+
+            int responseCode = urlConnection.getResponseCode();
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                data.success = false;
+                data.result = new Object[]{"error", urlConnection.getResponseCode(), urlConnection.getResponseMessage()};
+                return data;
             }
-            data.success = false;
-            data.result = new Object[] {"connectionError" };
-            return data;
-        }
-        String hostkey = null;
-        boolean valid = false;
-        if (ret != null) {
-            data.returnType = ret.getStatusLine().getStatusCode();
-            Timber.d("doInBackgroundLogin - response from server: %d, (%s)", data.returnType, ret.getStatusLine().getReasonPhrase());
-            if (data.returnType == 200) {
+
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuilder result = new StringBuilder();
+
+            try {
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String line = "";
+
+                while ((line = bufferedReader.readLine()) != null)
+                    result.append(line);
+            }finally {
+                inputStream.close();
+
+            }
+
+            if (result.toString().contains("<products>")){
+                boolean valid = false;
                 try {
-                    JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
-                    hostkey = jo.getString("key");
-                    valid = (hostkey != null) && (hostkey.length() > 0);
-                } catch (JSONException e) {
-                    valid = false;
-                } catch (IllegalStateException | IOException e) {
-                    throw new RuntimeException(e);
+                    Timber.d( "doInBackgroundLoginNinja() responseText");
+                    XmlPullParser parser = Xml.newPullParser();
+                    parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+                    InputStream ins = new ByteArrayInputStream(result.toString().getBytes());
+
+                    parser.setInput(ins, null);
+
+                    List <Produto> produtoList = readProdutos(parser);
+                    data.result = produtoList;
+                    valid = true;
+                } finally {
+                    inputStream.close();
                 }
+
+                data.success = true;
+                data.data = new String[] { username, "ninjalogado",password };
+            } else {
+                data.success = false;
+
+                if(result.toString().contains("blocked")){
+                    data.returnType = 401;
+                    data.result = new Object[] {result.toString()};
+                }else{
+                    data.returnType = responseCode;
+                }
+
             }
-        } else {
-            Timber.e("doInBackgroundLogin - empty response from server");
-        }
-        if (valid) {
-            data.success = true;
-            data.data = new String[] { username, hostkey };
-        } else {
+            return data;
+
+        }  catch (IOException | XmlPullParserException e2) {
+            // Ask user to report all bugs which aren't timeout errors
+            Timber.e("doInBackgroundLoginNinja - error: "+e2.getMessage());
+            if (!timeoutOccured(e2)) {
+                AnkiProApp.sendExceptionReport(e2, "doInBackgroundLogin");
+            }
             data.success = false;
+            data.result = new Object[] {"ninjaConnectionError" };
+            return data;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
         }
-        return data;
     }
 
 
@@ -263,7 +316,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
         // Use safe version that catches exceptions so that full sync is still possible
-        Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
+        Collection col = CollectionHelper.getInstance().getColSafe(AnkiProApp.getInstance());
 
         boolean colCorruptFullSync = false;
         if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
@@ -354,7 +407,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         }
                     }
                 } catch (OutOfMemoryError e) {
-                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
+                    AnkiProApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
                     data.result = new Object[] { "OutOfMemoryError" };
                     return data;
@@ -364,7 +417,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     } else if (e.getMessage().equals("UserAbortedSync")) {
                         data.result = new Object[] {"UserAbortedSync" };
                     } else {
-                        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
+                        AnkiProApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                         data.result = new Object[] { "IOException" };
                     }
                     data.success = false;
@@ -387,14 +440,14 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 try {
                     ret = mediaClient.sync();
                     if (ret == null) {
-                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
+                        mediaError = AnkiProApp.getAppResources().getString(R.string.sync_media_error);
                     } else {
                         if (ret.equals("noChanges")) {
                             publishProgress(R.string.sync_media_no_changes);
                             noMediaChanges = true;
                         }
                         if (ret.equals("sanityFailed")) {
-                            mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
+                            mediaError = AnkiProApp.getAppResources().getString(R.string.sync_media_sanity_failed);
                         } else {
                             publishProgress(R.string.sync_media_success);
                         }
@@ -405,7 +458,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     } else if (e.getMessage().equals("UserAbortedSync")) {
                         data.result = new Object[] {"UserAbortedSync" };
                     } else {
-                        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
+                        AnkiProApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                     }
                     mediaError = e.getLocalizedMessage();
                 }
@@ -423,7 +476,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Timber.e("Media sync rejected by server");
             data.success = false;
             data.result = new Object[] {"mediaSyncServerError"};
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundSync");
             return data;
         } catch (UnknownHttpResponseException e) {
             Timber.e("doInBackgroundSync -- unknown response code error");
@@ -444,7 +497,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             } else if (e.getMessage().equals("UserAbortedSync")) {
                 data.result = new Object[] {"UserAbortedSync" };
             } else {
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
+                AnkiProApp.sendExceptionReport(e, "doInBackgroundSync");
                 data.result = new Object[] {e.getLocalizedMessage()};
             }
             return data;
@@ -473,7 +526,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
     public static boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
+        ConnectivityManager cm = (ConnectivityManager) AnkiProApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
@@ -500,7 +553,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         public void onCancelled();
     }
 
-    public static class Payload {
+    public static class Payload{
         public int taskType;
         public Object[] data;
         public Object result;
@@ -562,6 +615,237 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 if (connectionManager != null) {
                     connectionManager.shutdown();
                 }
+            }
+        }
+    }
+
+    private List<Produto> readProdutos(XmlPullParser parser)
+            throws XmlPullParserException, IOException {
+
+        Timber.d("ConcurNinjaConnection > readProdutos");
+        List<Produto> productList = new ArrayList<>();
+
+        parser.nextTag();
+        parser.require(XmlPullParser.START_TAG, ns, "products");
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+            String tag = parser.getName();
+
+            if (tag.equals("products_from_mine")) {
+                parser.require(XmlPullParser.START_TAG, ns, "products_from_mine");
+                while (parser.next() != XmlPullParser.END_TAG) {
+                    if (parser.getEventType() != XmlPullParser.START_TAG) {
+                        continue;
+                    }
+
+
+
+                    parser.require(XmlPullParser.START_TAG, ns, "product_from_mine");
+                    while (parser.next() != XmlPullParser.END_TAG) {
+                        if (parser.getEventType() != XmlPullParser.START_TAG) {
+                            continue;
+                        }
+                        Timber.d("tag == 'product_from_mine'");
+                        Produto pr = readProduto(parser);
+                        pr.setMine(true);
+                        productList.add(pr);
+                    }
+                }
+
+            } else if (tag.equals("products_from_other")) {
+                parser.require(XmlPullParser.START_TAG, ns, "products_from_other");
+                while (parser.next() != XmlPullParser.END_TAG) {
+                    if (parser.getEventType() != XmlPullParser.START_TAG) {
+                        continue;
+                    }
+                    parser.require(XmlPullParser.START_TAG, ns, "product_from_other");
+                    while (parser.next() != XmlPullParser.END_TAG) {
+                        if (parser.getEventType() != XmlPullParser.START_TAG) {
+                            continue;
+                        }
+                        Timber.d("tag == 'product_from_other'");
+
+                        Produto pr = readProduto(parser);
+                        pr.setMine(false);
+                        productList.add(pr);
+                    }
+                }
+
+
+            } else {
+                skip(parser);
+            }
+
+        }
+
+        return productList;
+    }
+    private Produto readProduto(XmlPullParser parser)
+            throws XmlPullParserException, IOException {
+
+
+        Timber.d("ConcurNinjaConnection > readFeed");
+        Produto produto = new Produto();
+
+        String tag = parser.getName();
+
+        int prod_id = 0;
+        String prod_key = "";
+
+        if (tag.equals("id")) {
+            Timber.d("tag == 'id'");
+            produto.setId(Integer.parseInt(readId(parser)));
+
+            parser.nextTag();
+            tag = parser.getName();
+            if (tag.equals("name")) {
+                Timber.d("tag == 'name'");
+                produto.setKey(readKey(parser));
+
+            } else {
+                skip(parser);
+            }
+        }
+
+
+        return produto;
+    }
+    // Processes title tags in the feed.
+    private String readId(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "id");
+        String str_key = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "id");
+        return str_key;
+    }
+
+    private String readKey(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "name");
+        String title = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "name");
+        return title;
+    }
+
+    // For the tags title and summary, extracts their text values.
+    private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
+        String result = "";
+        if (parser.next() == XmlPullParser.TEXT) {
+            result = parser.getText();
+            parser.nextTag();
+        }
+        return result;
+    }
+
+    private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
+        if (parser.getEventType() != XmlPullParser.START_TAG) {
+            throw new IllegalStateException();
+        }
+        int depth = 1;
+        while (depth != 0) {
+            switch (parser.next()) {
+                case XmlPullParser.END_TAG:
+                    depth--;
+                    break;
+                case XmlPullParser.START_TAG:
+                    depth++;
+                    break;
+            }
+        }
+    }
+
+    public static Connection refreshProducts(TaskListener listener, Payload data) {
+        data.taskType = TASK_TYPE_LOGIN_NINJA;
+        return launchConnectionTask(listener, data);
+    }
+
+    private Payload doInBackgroundRefreshProducts(Payload data) {
+        String username = (String) data.data[0];
+        String password = (String) data.data[1];
+
+        String onlineUrl = "http://ankipro.com/ws";
+        HttpURLConnection urlConnection = null;
+        try {
+            String charset = "UTF-8";
+            String query = String.format("username=%s&passwd=%s",
+                    URLEncoder.encode(username, charset),
+                    URLEncoder.encode(password, charset));
+            //String dataUrlParameters = "?username="+username+"&password="+password;
+
+            URL url = new URL(onlineUrl+ "?" + query);//use a proper url instead of onlineUrl
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Accept-Charset", charset);
+            urlConnection.setDoInput(true); // true if we want to read server's response
+            urlConnection.setDoOutput(false); // false indicates this is a GET request
+            urlConnection.setRequestProperty("Content-Type", "text/xml");
+
+
+            int responseCode = urlConnection.getResponseCode();
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                data.success = false;
+                data.result = new Object[]{"error", urlConnection.getResponseCode(), urlConnection.getResponseMessage()};
+                return data;
+            }
+
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuilder result = new StringBuilder();
+
+            try {
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String line = "";
+
+                while ((line = bufferedReader.readLine()) != null)
+                    result.append(line);
+            }finally {
+                inputStream.close();
+
+            }
+
+            if (result.toString().contains("<products>")){
+                boolean valid = false;
+                try {
+                    Timber.d( "doInBackgroundLoginNinja() responseText");
+                    XmlPullParser parser = Xml.newPullParser();
+                    parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+                    InputStream ins = new ByteArrayInputStream(result.toString().getBytes());
+
+                    parser.setInput(ins, null);
+
+
+                    data.result = readProdutos(parser);
+                    valid = true;
+                } finally {
+                    inputStream.close();
+                }
+
+                data.success = true;
+                data.data = new String[] { username, "ninjalogado" };
+            } else {
+                data.success = false;
+
+                if(result.toString().contains("blocked")){
+                    data.returnType = 401;
+                    data.result = new Object[] {result.toString()};
+                }else{
+                    data.returnType = responseCode;
+                }
+            }
+
+            return data;
+
+        }  catch (IOException | XmlPullParserException e2) {
+            // Ask user to report all bugs which aren't timeout errors
+            Timber.e("doInBackgroundLoginNinja - error: "+e2.getMessage());
+            if (!timeoutOccured(e2)) {
+                AnkiProApp.sendExceptionReport(e2, "doInBackgroundLogin");
+            }
+            data.success = false;
+            data.result = new Object[] {"ninjaConnectionError" };
+            return data;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
             }
         }
     }

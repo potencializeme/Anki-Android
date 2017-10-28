@@ -24,7 +24,7 @@
             fab:fab_title="@string/new_deck"
             fab:fab_size="mini"
             fab:fab_colorPressed="?attr/fab_pressed"/>
-        <com.getbase.floatingactionbutton.FloatingActionButton
+        <!--com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_shared_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             fab:fab_icon="@drawable/ic_file_download_white_24dp"
             fab:fab_title="@string/menu_get_shared_decks"
             fab:fab_size="mini"
-            fab:fab_colorPressed="?attr/fab_pressed"/>
+            fab:fab_colorPressed="?attr/fab_pressed"/-->
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_note_action"
             android:layout_width="wrap_content"

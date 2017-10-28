@@ -3,7 +3,6 @@ package com.ichi2.anki.dialogs;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -332,7 +331,7 @@ public class TagsDialog extends DialogFragment {
         }
 
         @Override
-        public TagsArrayAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+        public ViewHolder onCreateViewHolder(ViewGroup parent,
                                                               int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.tags_item_list_dialog, parent, false);

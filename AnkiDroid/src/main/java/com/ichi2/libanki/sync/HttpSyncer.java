@@ -23,7 +23,7 @@ package com.ichi2.libanki.sync;
 import android.content.SharedPreferences;
 import android.net.Uri;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
@@ -162,7 +162,7 @@ public class HttpSyncer {
                 buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", key,
                         mPostVars.get(key)));
             }
-            tmpFileBuffer = File.createTempFile("syncer", ".tmp", new File(AnkiDroidApp.getCacheStorageDirectory()));
+            tmpFileBuffer = File.createTempFile("syncer", ".tmp", new File(AnkiProApp.getCacheStorageDirectory()));
             FileOutputStream fos = new FileOutputStream(tmpFileBuffer);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
             GZIPOutputStream tgt;
@@ -451,7 +451,7 @@ public class HttpSyncer {
 
     public String syncURL() {
         // Allow user to specify custom sync server
-        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        SharedPreferences userPreferences = AnkiProApp.getSharedPrefs(AnkiProApp.getInstance());
         if (userPreferences!= null && userPreferences.getBoolean("useCustomSyncServer", false)) {
             Uri syncBase = Uri.parse(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
             return syncBase.buildUpon().appendPath("sync").toString() + "/";

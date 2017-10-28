@@ -23,7 +23,7 @@ import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.R;
 
@@ -41,24 +41,24 @@ public class CustomDialogPreference extends DialogPreference implements DialogIn
         if (which == DialogInterface.BUTTON_POSITIVE) {
             if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_reset))) {
                 // Deck Options :: Restore Defaults for Options Group
-                Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
+                Editor editor = AnkiProApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confReset", true);
                 editor.commit();
             } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_remove))) {
                 // Deck Options :: Remove Options Group
-                Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
+                Editor editor = AnkiProApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confRemove", true);
                 editor.commit();
             } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_set_subdecks))) {
                 // Deck Options :: Set Options Group for all Sub-decks
-                Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
+                Editor editor = AnkiProApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confSetSubdecks", true);
                 editor.commit();
             } else {
                 // Main Preferences :: Reset Languages
                 if (MetaDB.resetLanguages(mContext)) {
                     Toast successReport = Toast.makeText(this.getContext(),
-                            AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), Toast.LENGTH_SHORT);
+                            AnkiProApp.getAppResources().getString(R.string.reset_confirmation), Toast.LENGTH_SHORT);
                     successReport.show();
                 }
             }

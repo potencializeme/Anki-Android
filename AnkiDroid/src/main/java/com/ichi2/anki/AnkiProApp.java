@@ -50,12 +50,14 @@ import timber.log.Timber;
 
 /**
  * Application class.
+ *         formUriBasicAuthLogin = "admin",
+ formUriBasicAuthPassword = "bb72e9c1eb81",
  */
 @ReportsCrashes(
         reportDialogClass = AnkiDroidCrashReportDialog.class,
         httpMethod = HttpSender.Method.PUT,
         reportType = HttpSender.Type.JSON,
-        formUri = "https://ankidroid.org/acra/report",
+        formUri = "https://couchdb-ed8c8c.smileupps.com/acra-myapp/report",
         mode = ReportingInteractionMode.DIALOG,
         resDialogCommentPrompt =  R.string.empty_string,
         resDialogTitle =  R.string.feedback_title,
@@ -106,9 +108,9 @@ import timber.log.Timber;
             ReportField.THREAD_DETAILS
             //ReportField.USER_IP
         },
-        logcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" }
+        logcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiProApp.TAG + ":D", "*:S" }
 )
-public class AnkiDroidApp extends Application {
+public class AnkiProApp extends Application {
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
     public static final String FEEDBACK_REPORT_ASK = "2";
@@ -118,7 +120,7 @@ public class AnkiDroidApp extends Application {
     // Tag for logging messages.
     public static final String TAG = "AnkiDroid";
     // Singleton instance of this class.
-    private static AnkiDroidApp sInstance;
+    private static AnkiProApp sInstance;
     // Constants for gestures
     public static int sSwipeMinDistance = -1;
     public static int sSwipeThresholdVelocity = -1;
@@ -194,7 +196,7 @@ public class AnkiDroidApp extends Application {
                 String defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory();
                 if (isSdCardMounted() && CollectionHelper.getCurrentAnkiDroidDirectory(this).equals(defaultDir)) {
                     // Don't send report if the user is using a custom directory as SD cards trip up here a lot
-                    sendExceptionReport(e, "AnkiDroidApp.onCreate");
+                    sendExceptionReport(e, "AnkiProApp.onCreate");
                 }
             }
         }
@@ -221,7 +223,7 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static AnkiDroidApp getInstance() {
+    public static AnkiProApp getInstance() {
         return sInstance;
     }
 

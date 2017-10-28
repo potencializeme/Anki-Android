@@ -9,7 +9,6 @@ import android.preference.PreferenceActivity;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.Preferences;
 
 import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
@@ -39,7 +38,7 @@ public class CompatV11 extends CompatV10 implements Compat {
 
     @Override
     public Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
-        Intent i = new Intent(context, Preferences.class);
+        Intent i = new Intent(context, com.ichi2.anki.Preferences.class);
         i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$SettingsFragment");
         Bundle extras = new Bundle();
         extras.putString("subscreen", subscreen);

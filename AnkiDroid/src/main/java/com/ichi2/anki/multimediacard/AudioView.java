@@ -101,10 +101,10 @@ public class AudioView extends LinearLayout {
         this.setOrientation(HORIZONTAL);
 
         mPlayPause = new PlayPauseButton(context);
-        addView(mPlayPause, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        addView(mPlayPause, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         mStop = new StopButton(context);
-        addView(mStop, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        addView(mStop, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     }
 
 
@@ -129,7 +129,7 @@ public class AudioView extends LinearLayout {
         this.setOrientation(HORIZONTAL);
 
         mRecord = new RecordButton(context);
-        addView(mRecord, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        addView(mRecord, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     }
 
 
@@ -211,7 +211,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class PlayPauseButton extends ImageButton {
-        OnClickListener onClickListener = new View.OnClickListener() {
+        OnClickListener onClickListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mAudioPath == null) {
@@ -311,7 +311,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class StopButton extends ImageButton {
-        OnClickListener onClickListener = new View.OnClickListener() {
+        OnClickListener onClickListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (mStatus) {
@@ -354,7 +354,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class RecordButton extends ImageButton {
-        OnClickListener onClickListener = new View.OnClickListener() {
+        OnClickListener onClickListener = new OnClickListener() {
             @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
             @Override
             public void onClick(View v) {
@@ -367,8 +367,8 @@ public class AudioView extends LinearLayout {
                     case IDLE: // If not already recorded or not already played
                     case STOPPED: // if already recorded or played
                         boolean highSampling = false;
-                        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                        if (currentapiVersion >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+                        int currentapiVersion = Build.VERSION.SDK_INT;
+                        if (currentapiVersion >= Build.VERSION_CODES.GINGERBREAD_MR1) {
                             try {
                                 // try high quality AAC @ 44.1kHz / 192kbps first
                                 mRecorder = initMediaRecorder();

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wrong_ninja_help">Clique aqui.</string>
+    <string name="wrong_ninja_password">Dados errados, se precisar de ajuda,</string>
+    <string name="product_not_present">Produto não presente na lista de produtos adquiridos.</string>
+    <string name="ninja_sync_account">Conta AnkiDroid</string>
+    <string name="empty_products">Sem produtos para selecionar.</string>
+    <string name="deck_ninja_empty">Você não possui produtos. Por favor, adquira alguns e tente novamente.</string>
+</resources>

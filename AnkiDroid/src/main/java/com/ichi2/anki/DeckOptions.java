@@ -373,7 +373,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     mCol.getDecks().save(mOptions);
                 } catch (RuntimeException e) {
                     Timber.e("DeckOptions - RuntimeException on saving conf: " + e);
-                    AnkiDroidApp.sendExceptionReport(e, "DeckOptionsSaveConf");
+                    AnkiProApp.sendExceptionReport(e, "DeckOptionsSaveConf");
                     setResult(DeckPicker.RESULT_DB_ERROR);
                     finish();
                 }
@@ -441,7 +441,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
 
             // @Override On Android 1.5 this is not Override
-            public android.content.SharedPreferences.Editor putStringSet(String arg0, Set<String> arg1) {
+            public SharedPreferences.Editor putStringSet(String arg0, Set<String> arg1) {
                 // TODO Auto-generated method stub
                 return null;
             }

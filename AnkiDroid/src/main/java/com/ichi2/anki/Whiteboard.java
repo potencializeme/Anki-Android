@@ -86,7 +86,7 @@ public class Whiteboard extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        int wbStrokeWidth = AnkiDroidApp.getSharedPrefs(context).getInt("whiteBoardStrokeWidth", 6);
+        int wbStrokeWidth = AnkiProApp.getSharedPrefs(context).getInt("whiteBoardStrokeWidth", 6);
         mPaint.setStrokeWidth((float) wbStrokeWidth);
         createBitmap();
         mPath = new Path();
@@ -231,14 +231,14 @@ public class Whiteboard extends View {
 
 
     private static int getDisplayHeight() {
-        Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
+        Display display = ((WindowManager) AnkiProApp.getInstance().getApplicationContext().
                 getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         return display.getHeight();
     }
 
 
     private static int getDisplayWidth() {
-        Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
+        Display display = ((WindowManager) AnkiProApp.getInstance().getApplicationContext().
                 getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         return display.getWidth();
     }

@@ -22,9 +22,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.R;
 
 public class Themes {
@@ -41,7 +40,7 @@ public class Themes {
 
 
     public static void setTheme(Context context) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
+        SharedPreferences prefs = AnkiProApp.getSharedPrefs(context.getApplicationContext());
         if (prefs.getBoolean("invertedColors", false)) {
             int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
             switch (theme) {
@@ -66,7 +65,7 @@ public class Themes {
     }
 
     public static void setThemeLegacy(Context context) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
+        SharedPreferences prefs = AnkiProApp.getSharedPrefs(context.getApplicationContext());
         if (prefs.getBoolean("invertedColors", false)) {
             int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
             switch (theme) {
@@ -125,7 +124,7 @@ public class Themes {
      * whether we are in day mode or night mode.
      */
     public static int getCurrentTheme(Context context) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);
+        SharedPreferences prefs = AnkiProApp.getSharedPrefs(context);
         if (prefs.getBoolean("invertedColors", false)) {
             return Integer.parseInt(prefs.getString("nightTheme", "0"));
         } else {

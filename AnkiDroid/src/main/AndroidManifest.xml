@@ -19,11 +19,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.ichi2.anki"
-          android:installLocation="auto"
-          android:versionCode="20900107"
-          android:versionName="2.9alpha7">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ichi2.anki"
+    android:installLocation="auto"
+    android:versionCode="20900107"
+    android:versionName="2.9alpha7">
 
     <!--
         The version number is of the form:
@@ -57,9 +57,9 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <permission android:name="com.ichi2.anki.permission.READ_WRITE_DATABASE"
-                android:label="@string/read_write_permission_label"
-                android:description="@string/read_write_permission_description"
-                android:protectionLevel="dangerous" />
+        android:label="@string/read_write_permission_label"
+        android:description="@string/read_write_permission_description"
+        android:protectionLevel="dangerous" />
     <!-- custom tabs library has minimum SDK of 16 -->
     <uses-sdk tools:overrideLibrary="android.support.customtabs, com.getbase.floatingactionbutton"/>
 
@@ -72,7 +72,7 @@
         android:xlargeScreens="true" />
 
     <application
-        android:name="com.ichi2.anki.AnkiDroidApp"
+        android:name="com.ichi2.anki.AnkiProApp"
         android:allowBackup="true"
         android:icon="@mipmap/anki"
         android:roundIcon="@mipmap/anki_round"
@@ -80,7 +80,7 @@
         android:windowSoftInputMode="adjustResize"
         android:largeHeap="true">
         <activity
-            android:name="com.ichi2.anki.IntentHandler"
+            android:name="com.ankipro.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name">
@@ -114,6 +114,7 @@
                     android:mimeType="*/*"
                     android:pathPattern=".*\\.apkg"
                     android:scheme="file" />
+
             </intent-filter>
             <!-- MIME type matcher for .apkg files coming from providers like gmail which hide the file extension -->
             <intent-filter>
@@ -125,7 +126,42 @@
                 <data android:mimeType="application/octet-stream" android:scheme="content"/>
                 <data android:mimeType="application/zip" android:scheme="content"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/ankipro"/>
+                <data android:mimeType="application/vnd.anki"/>
+                <data android:mimeType="application/x-ankipro"/>
+                <data android:mimeType="application/octet-stream" android:scheme="content"/>
+                <data android:mimeType="application/zip" android:scheme="content"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
+                <!-- ankipro extension -->
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.ankipro"
+                    android:scheme="http" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.ankipro"
+                    android:scheme="https" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.ankipro"
+                    android:scheme="content" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.ankipro"
+                    android:scheme="file" />
+            </intent-filter>
             <!-- Tasker DO_SYNC intent -->
             <intent-filter>
                 <action android:name="com.ichi2.anki.DO_SYNC" />
@@ -144,7 +180,7 @@
             android:exported="false"
             android:configChanges="keyboardHidden|locale|orientation|screenSize"
             android:label="StudyOptions"
-            android:parentActivityName=".DeckPicker">
+            android:parentActivityName="com.ichi2.anki.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -155,19 +191,19 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Card Browser"
-            android:parentActivityName=".DeckPicker">
+            android:parentActivityName="com.ichi2.anki.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ichi2.anki.DeckPicker" />
         </activity>
         <activity
-        android:name=".ModelBrowser"
-        android:exported="false"
-        android:configChanges="keyboardHidden|orientation|locale|screenSize"
-        android:label="@string/model_browser_label" />
+            android:name="com.ichi2.anki.ModelBrowser"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/model_browser_label" />
         <activity
-            android:name=".ModelFieldEditor"
+            android:name="com.ichi2.anki.ModelFieldEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/model_editor_label" />
         <activity
@@ -175,7 +211,7 @@
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="adjustResize"
-            android:parentActivityName=".DeckPicker">
+            android:parentActivityName="com.ichi2.anki.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -191,7 +227,7 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name="com.ichi2.anki.MyAccount"
+            android:name="com.ankipro.anki.AnkiProAccount"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/menu_my_account" />
@@ -208,7 +244,7 @@
             android:label="@string/deckpreferences_title"
             android:theme="@style/LegacyActionBarLight"/>
         <activity
-            android:name=".FilteredDeckOptions"
+            android:name="com.ichi2.anki.FilteredDeckOptions"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
@@ -242,7 +278,7 @@
             android:name="com.ichi2.anki.Statistics"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:parentActivityName=".DeckPicker">
+            android:parentActivityName="com.ichi2.anki.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -302,24 +338,24 @@
         </receiver>
 
         <receiver
-            android:name=".receiver.ReminderReceiver"
+            android:name="com.ichi2.anki.receiver.ReminderReceiver"
             android:enabled="true"
             android:exported="false">
         </receiver>
         <receiver
-            android:name=".receiver.BootReceiver"
+            android:name="com.ichi2.anki.receiver.BootReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <service android:name=".services.ReminderService" android:exported="false"/>
-        <service android:name=".services.BootService" android:exported="false"/>
+        <service android:name="com.ichi2.anki.services.ReminderService" android:exported="false"/>
+        <service android:name="com.ichi2.anki.services.BootService" android:exported="false"/>
 
         <activity
             android:exported="false"
-            android:name=".multimediacard.activity.MultimediaEditFieldActivity"
+            android:name="com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_edit_text" >
         </activity>
@@ -358,7 +394,7 @@
             android:resource="@drawable/anki" />
 
         <provider
-            android:name=".provider.CardContentProvider"
+            android:name="com.ichi2.anki.provider.CardContentProvider"
             android:authorities="com.ichi2.anki.flashcards"
             android:enabled="true"
             android:exported="true" >

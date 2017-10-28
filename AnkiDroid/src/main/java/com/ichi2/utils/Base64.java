@@ -511,7 +511,7 @@ public class Base64 extends Object {
         try {
             // ObjectOutputStream -> (GZIP) -> Base64 -> ByteArrayOutputStream
             baos = new java.io.ByteArrayOutputStream();
-            b64os = new Base64.OutputStream(baos, ENCODE | options);
+            b64os = new OutputStream(baos, ENCODE | options);
             if ((options & GZIP) != 0) {
                 // Gzip
                 gzos = new java.util.zip.GZIPOutputStream(b64os);
@@ -750,12 +750,12 @@ public class Base64 extends Object {
         if ((options & GZIP) != 0) {
             java.io.ByteArrayOutputStream baos = null;
             java.util.zip.GZIPOutputStream gzos = null;
-            Base64.OutputStream b64os = null;
+            OutputStream b64os = null;
 
             try {
                 // GZip -> Base64 -> ByteArray
                 baos = new java.io.ByteArrayOutputStream();
-                b64os = new Base64.OutputStream(baos, ENCODE | options);
+                b64os = new OutputStream(baos, ENCODE | options);
                 gzos = new java.util.zip.GZIPOutputStream(b64os);
 
                 gzos.write(source, off, len);
@@ -1142,7 +1142,7 @@ public class Base64 extends Object {
      * @since 1.5
      */
     public static Object decodeToObject(String encodedObject) throws java.io.IOException,
-            java.lang.ClassNotFoundException {
+            ClassNotFoundException {
         return decodeToObject(encodedObject, NO_OPTIONS, null);
     }
 
@@ -1161,7 +1161,7 @@ public class Base64 extends Object {
      * @since 2.3.4
      */
     public static Object decodeToObject(String encodedObject, int options, final ClassLoader loader)
-            throws java.io.IOException, java.lang.ClassNotFoundException {
+            throws java.io.IOException, ClassNotFoundException {
 
         // Decode and gunzip if necessary
         byte[] objBytes = decode(encodedObject, options);
@@ -1235,9 +1235,9 @@ public class Base64 extends Object {
             throw new NullPointerException("Data to encode was null.");
         } // end iff
 
-        Base64.OutputStream bos = null;
+        OutputStream bos = null;
         try {
-            bos = new Base64.OutputStream(new java.io.FileOutputStream(filename), Base64.ENCODE);
+            bos = new OutputStream(new java.io.FileOutputStream(filename), Base64.ENCODE);
             bos.write(dataToEncode);
         } // end try
         catch (java.io.IOException e) {
@@ -1267,9 +1267,9 @@ public class Base64 extends Object {
      */
     public static void decodeToFile(String dataToDecode, String filename) throws java.io.IOException {
 
-        Base64.OutputStream bos = null;
+        OutputStream bos = null;
         try {
-            bos = new Base64.OutputStream(new java.io.FileOutputStream(filename), Base64.DECODE);
+            bos = new OutputStream(new java.io.FileOutputStream(filename), Base64.DECODE);
             bos.write(dataToDecode.getBytes(PREFERRED_ENCODING));
         } // end try
         catch (java.io.IOException e) {
@@ -1300,7 +1300,7 @@ public class Base64 extends Object {
     public static byte[] decodeFromFile(String filename) throws java.io.IOException {
 
         byte[] decodedData = null;
-        Base64.InputStream bis = null;
+        InputStream bis = null;
         try {
             // Set up some useful variables
             java.io.File file = new java.io.File(filename);
@@ -1316,7 +1316,7 @@ public class Base64 extends Object {
             buffer = new byte[(int) file.length()];
 
             // Open a stream
-            bis = new Base64.InputStream(new java.io.BufferedInputStream(new java.io.FileInputStream(file)),
+            bis = new InputStream(new java.io.BufferedInputStream(new java.io.FileInputStream(file)),
                     Base64.DECODE);
 
             // Read until done
@@ -1358,7 +1358,7 @@ public class Base64 extends Object {
     public static String encodeFromFile(String filename) throws java.io.IOException {
 
         String encodedData = null;
-        Base64.InputStream bis = null;
+        InputStream bis = null;
         try {
             // Set up some useful variables
             java.io.File file = new java.io.File(filename);
@@ -1374,7 +1374,7 @@ public class Base64 extends Object {
             int numBytes = 0;
 
             // Open a stream
-            bis = new Base64.InputStream(new java.io.BufferedInputStream(new java.io.FileInputStream(file)),
+            bis = new InputStream(new java.io.BufferedInputStream(new java.io.FileInputStream(file)),
                     Base64.ENCODE);
 
             // Read until done
@@ -1458,7 +1458,7 @@ public class Base64 extends Object {
     /* ******** I N N E R C L A S S I N P U T S T R E A M ******** */
 
     /**
-     * A {@link Base64.InputStream} will read data from another <tt>java.io.InputStream</tt>, given in the constructor,
+     * A {@link InputStream} will read data from another <tt>java.io.InputStream</tt>, given in the constructor,
      * and encode/decode to/from Base64 notation on the fly.
      * 
      * @see Base64
@@ -1486,7 +1486,7 @@ public class Base64 extends Object {
 
 
         /**
-         * Constructs a {@link Base64.InputStream} in DECODE mode.
+         * Constructs a {@link InputStream} in DECODE mode.
          * 
          * @param in the <tt>java.io.InputStream</tt> from which to read data.
          * @since 1.3
@@ -1497,7 +1497,7 @@ public class Base64 extends Object {
 
 
         /**
-         * Constructs a {@link Base64.InputStream} in either ENCODE or DECODE mode.
+         * Constructs a {@link InputStream} in either ENCODE or DECODE mode.
          * <p>
          * Valid options:
          * 
@@ -1667,7 +1667,7 @@ public class Base64 extends Object {
     /* ******** I N N E R C L A S S O U T P U T S T R E A M ******** */
 
     /**
-     * A {@link Base64.OutputStream} will write data to another <tt>java.io.OutputStream</tt>, given in the constructor,
+     * A {@link OutputStream} will write data to another <tt>java.io.OutputStream</tt>, given in the constructor,
      * and encode/decode to/from Base64 notation on the fly.
      * 
      * @see Base64
@@ -1697,7 +1697,7 @@ public class Base64 extends Object {
 
 
         /**
-         * Constructs a {@link Base64.OutputStream} in ENCODE mode.
+         * Constructs a {@link OutputStream} in ENCODE mode.
          * 
          * @param out the <tt>java.io.OutputStream</tt> to which data will be written.
          * @since 1.3
@@ -1708,7 +1708,7 @@ public class Base64 extends Object {
 
 
         /**
-         * Constructs a {@link Base64.OutputStream} in either ENCODE or DECODE mode.
+         * Constructs a {@link OutputStream} in either ENCODE or DECODE mode.
          * <p>
          * Valid options:
          * 

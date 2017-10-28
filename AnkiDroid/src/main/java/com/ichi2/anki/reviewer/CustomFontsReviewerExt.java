@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.libanki.Utils;
 
@@ -96,7 +96,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
      */
     private String getDefaultFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
         if (mDefaultFontStyle == null) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+            SharedPreferences preferences = AnkiProApp.getSharedPrefs(context);
             AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
             if (defaultFont != null) {
                 mDefaultFontStyle = "BODY { " + defaultFont.getCSS(false) + " }\n";
@@ -115,7 +115,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
      */
     private String getOverrideFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
         if (mOverrideFontStyle == null) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+            SharedPreferences preferences = AnkiProApp.getSharedPrefs(context);
             AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
             boolean overrideFont = preferences.getString("overrideFontBehavior", "0").equals("1");
             if (defaultFont != null && overrideFont) {

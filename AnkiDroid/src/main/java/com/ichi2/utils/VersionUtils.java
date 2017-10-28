@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 
 import timber.log.Timber;
 
@@ -18,8 +18,8 @@ public class VersionUtils {
      * Get package name as defined in the manifest.
      */
     public static String getAppName() {
-        String pkgName = AnkiDroidApp.TAG;
-        Context context = AnkiDroidApp.getInstance();
+        String pkgName = AnkiProApp.TAG;
+        Context context = AnkiProApp.getInstance();
 
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -37,7 +37,7 @@ public class VersionUtils {
      */
     public static String getPkgVersionName() {
         String pkgVersion = "?";
-        Context context = AnkiDroidApp.getInstance();
+        Context context = AnkiProApp.getInstance();
         if (context != null) {
             try {
                 PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -54,7 +54,7 @@ public class VersionUtils {
      * Get the package versionCode as defined in the manifest.
      */
     public static int getPkgVersionCode() {
-        Context context = AnkiDroidApp.getInstance();
+        Context context = AnkiProApp.getInstance();
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return pInfo.versionCode;

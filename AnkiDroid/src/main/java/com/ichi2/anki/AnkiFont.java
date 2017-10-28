@@ -94,7 +94,7 @@ public class AnkiFont {
         AnkiFont createdFont = new AnkiFont(name, family, attributes, path);
 
         // determine if override font or default font
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(ctx);
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(ctx);
         String defaultFont = preferences.getString("defaultFont", "");
         boolean overrideFont = preferences.getString("overrideFontBehavior", "0").equals("1");
         if (defaultFont.equalsIgnoreCase(name)) {
@@ -157,7 +157,7 @@ public class AnkiFont {
             if (!corruptFonts.contains(path)) {
                 // Show warning toast
                 String name = new File(path).getName();
-                Resources res = AnkiDroidApp.getAppResources();
+                Resources res = AnkiProApp.getAppResources();
                 Toast toast = Toast.makeText(ctx, res.getString(R.string.corrupt_font, name), Toast.LENGTH_LONG);
                 toast.show();
                 // Don't warn again in this session

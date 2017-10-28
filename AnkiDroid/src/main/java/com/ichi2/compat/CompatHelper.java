@@ -89,22 +89,22 @@ public class CompatHelper {
     }
 
     private boolean isNookHdPlus() {
-        return android.os.Build.BRAND.equals("NOOK") && android.os.Build.PRODUCT.equals("HDplus")
-                && android.os.Build.DEVICE.equals("ovation");
+        return Build.BRAND.equals("NOOK") && Build.PRODUCT.equals("HDplus")
+                && Build.DEVICE.equals("ovation");
     }
 
     private boolean isNookHd () {
-        return android.os.Build.MODEL.equalsIgnoreCase("bntv400") && android.os.Build.BRAND.equals("NOOK");
+        return Build.MODEL.equalsIgnoreCase("bntv400") && Build.BRAND.equals("NOOK");
     }
 
 
     public static boolean isNook() {
-        return android.os.Build.MODEL.equalsIgnoreCase("nook") || android.os.Build.DEVICE.equalsIgnoreCase("nook");
+        return Build.MODEL.equalsIgnoreCase("nook") || Build.DEVICE.equalsIgnoreCase("nook");
     }
 
 
     public static boolean isChromebook() {
-        return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium");
+        return Build.BRAND.equalsIgnoreCase("chromium") || Build.MANUFACTURER.equalsIgnoreCase("chromium");
     }
 
     public static boolean isKindle() {

@@ -4,7 +4,7 @@ package com.ichi2.anki.dialogs;
 import android.os.Bundle;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.R;
 
 public class SimpleMessageDialog extends AsyncDialogFragment {
@@ -54,7 +54,7 @@ public class SimpleMessageDialog extends AsyncDialogFragment {
         if (!title.equals("")) {
             return title;
         } else {
-            return AnkiDroidApp.getAppResources().getString(R.string.app_name);
+            return AnkiProApp.getAppResources().getString(R.string.app_name);
         }
     }
 

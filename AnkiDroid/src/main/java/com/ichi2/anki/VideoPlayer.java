@@ -27,7 +27,7 @@ import android.widget.VideoView;
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-public class VideoPlayer extends Activity implements android.view.SurfaceHolder.Callback {
+public class VideoPlayer extends Activity implements SurfaceHolder.Callback {
     VideoView mVideoView;
     String mPath;
     Sound mSoundPlayer;

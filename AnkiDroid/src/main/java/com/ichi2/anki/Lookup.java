@@ -39,7 +39,7 @@ public class Lookup {
 
     public static boolean initialize(Context context) {
         mContext = context;
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(AnkiProApp.getInstance().getBaseContext());
         mDictionary = Integer.parseInt(preferences.getString("dictionary", Integer.toString(DICTIONARY_NONE)));
         switch (mDictionary) {
             case DICTIONARY_NONE:

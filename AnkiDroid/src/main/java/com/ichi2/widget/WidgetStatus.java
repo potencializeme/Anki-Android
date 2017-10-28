@@ -20,7 +20,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
@@ -51,7 +51,7 @@ public final class WidgetStatus {
      * Request the widget to update its status.
      */
     public static void update(Context context) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(context);
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
         sNotificationEnabled = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000;
         if ((sSmallWidgetEnabled || sNotificationEnabled)
@@ -86,7 +86,7 @@ public final class WidgetStatus {
             super.doInBackground(params);
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
             Context context = params[0];
-            if (!AnkiDroidApp.isSdCardMounted()) {
+            if (!AnkiProApp.isSdCardMounted()) {
                 return context;
             }
             try {

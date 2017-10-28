@@ -34,7 +34,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
@@ -177,9 +177,9 @@ public class CardContentProvider extends ContentProvider {
             case MODELS_ID_EMPTY_CARDS:
                 return FlashCardsContract.Card.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES:
-                return FlashCardsContract.CardTemplate.CONTENT_TYPE;
+                return CardTemplate.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES_ID:
-                return FlashCardsContract.CardTemplate.CONTENT_ITEM_TYPE;
+                return CardTemplate.CONTENT_ITEM_TYPE;
             case SCHEDULE:
                 return FlashCardsContract.ReviewInfo.CONTENT_TYPE;
             case DECKS:
@@ -1166,7 +1166,7 @@ public class CardContentProvider extends ContentProvider {
             }
         } catch (RuntimeException e) {
             Timber.e(e, "answerCard - RuntimeException on answering card");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
+            AnkiProApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
             return;
         }
     }

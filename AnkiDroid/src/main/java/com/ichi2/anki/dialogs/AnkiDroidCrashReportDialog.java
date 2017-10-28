@@ -25,7 +25,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiProApp;
 import com.ichi2.anki.R;
 
 import org.acra.ACRA;
@@ -67,7 +67,7 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
      * @return
      */
     private View buildCustomView(Bundle savedInstanceState) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+        SharedPreferences preferences = AnkiProApp.getSharedPrefs(this);
         LayoutInflater inflater = getLayoutInflater();
         View rootView = inflater.inflate(R.layout.feedback, null);
         mAlwaysReportCheckBox = (CheckBox) rootView.findViewById(R.id.alwaysReportCheckbox);
@@ -88,12 +88,12 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
         if (which == DialogInterface.BUTTON_POSITIVE) {
             // Next time don't tick the auto-report checkbox by default
             boolean autoReport = mAlwaysReportCheckBox.isChecked();
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+            SharedPreferences preferences = AnkiProApp.getSharedPrefs(this);
             preferences.edit().putBoolean("autoreportCheckboxValue", autoReport).commit();
             // Set the autoreport value to true if ticked
             if (autoReport) {
-                preferences.edit().putString("reportErrorMode", AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).commit();
-                AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS);
+                preferences.edit().putString("reportErrorMode", AnkiProApp.FEEDBACK_REPORT_ALWAYS).commit();
+                AnkiProApp.getInstance().setAcraReportingMode(AnkiProApp.FEEDBACK_REPORT_ALWAYS);
             }
             // Send the crash report
             sendCrash(mUserComment.getText().toString(), "");
