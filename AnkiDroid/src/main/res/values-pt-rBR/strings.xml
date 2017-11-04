@@ -5,5 +5,5 @@
     <string name="product_not_present">Produto não presente na lista de produtos adquiridos.</string>
     <string name="ankipro_sync_account">Conta 3xWiser</string>
     <string name="empty_products">Sem produtos para selecionar.</string>
-    <string name="deck_ankipro_empty">Você não possui produtos. Por favor, adquira alguns e tente novamente.</string>
+    <string name="deck_ankipro_empty">Você não possui baralhos. Por favor, adicione algum tente novamente.</string>
 </resources>

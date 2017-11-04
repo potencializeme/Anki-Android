@@ -143,7 +143,7 @@ public class CompatV10 implements Compat {
         Resources res = activity.getResources();
         new MaterialDialog.Builder(activity)
                 .items(new String[]{res.getString(R.string.menu_add_note),
-                        //res.getString(R.string.menu_get_shared_decks),
+                        res.getString(R.string.menu_get_shared_decks),
                         res.getString(R.string.new_deck)})
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override

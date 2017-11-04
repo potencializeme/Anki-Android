@@ -622,7 +622,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private List<Produto> readProdutos(XmlPullParser parser)
             throws XmlPullParserException, IOException {
 
-        Timber.d("ConcurNinjaConnection > readProdutos");
+        Timber.d("AnkiProConnection > readProdutos");
         List<Produto> productList = new ArrayList<>();
 
         parser.nextTag();
@@ -686,7 +686,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             throws XmlPullParserException, IOException {
 
 
-        Timber.d("ConcurNinjaConnection > readFeed");
+        Timber.d("AnkiProConnection > readFeed");
         Produto produto = new Produto();
 
         String tag = parser.getName();
