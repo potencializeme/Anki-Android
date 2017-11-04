@@ -483,7 +483,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void configureFloatingActionsMenu() {
         final FloatingActionButton addDeckButton = (FloatingActionButton) findViewById(R.id.add_deck_action);
-        //final FloatingActionButton addSharedButton = (FloatingActionButton) findViewById(R.id.add_shared_action);
+        final FloatingActionButton addSharedButton = (FloatingActionButton) findViewById(R.id.add_shared_action);
         final FloatingActionButton addNoteButton = (FloatingActionButton) findViewById(R.id.add_note_action);
         addDeckButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -512,13 +512,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         .show();
             }
         });
-        /*addSharedButton.setOnClickListener(new OnClickListener() {
+        addSharedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 mActionsMenu.collapse();
                 addSharedDeck();
             }
-        });*/
+        });
         addNoteButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
