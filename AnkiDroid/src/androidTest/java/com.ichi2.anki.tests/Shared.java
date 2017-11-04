@@ -14,16 +14,14 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.tests;
+package com.x3wiser.anki.tests;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.text.TextUtils;
 
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Storage;
-import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.Hooks;
+import com.x3wiser.libanki.Collection;
+import com.x3wiser.libanki.Storage;
+import com.x3wiser.libanki.Utils;
 
 import java.io.File;
 import java.io.IOException;

@@ -21,7 +21,7 @@ package com.ankipro.libanki;
 
 import android.content.Context;
 
-import com.ichi2.anki.CollectionHelper;
+import com.x3wiser.anki.CollectionHelper;
 
 
 
@@ -34,7 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class Utils extends com.ichi2.libanki.Utils{
+public class Utils extends com.x3wiser.libanki.Utils{
 
     /* Prevent class from being instantiated */
     protected Utils() {

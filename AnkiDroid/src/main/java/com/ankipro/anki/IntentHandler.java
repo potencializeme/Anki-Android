@@ -10,14 +10,14 @@ import android.provider.OpenableColumns;
 import android.support.v4.content.IntentCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.AnkiProApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.R;
-import com.ichi2.anki.Reviewer;
-import com.ichi2.anki.dialogs.DialogHandler;
-import com.ichi2.anki.services.ReminderService;
+import com.x3wiser.anim.ActivityTransitionAnimation;
+import com.x3wiser.anki.AnkiProApp;
+import com.x3wiser.anki.CollectionHelper;
+import com.x3wiser.anki.DeckPicker;
+import com.x3wiser.anki.R;
+import com.x3wiser.anki.Reviewer;
+import com.x3wiser.anki.dialogs.DialogHandler;
+import com.x3wiser.anki.services.ReminderService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -128,7 +128,7 @@ public class IntentHandler extends Activity {
                         })
                         .build().show();
             }
-        } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {
+        } else if ("com.x3wiser.anki.DO_SYNC".equals(action)) {
             sendDoSyncMsg();
             reloadIntent.setAction(action);
             reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

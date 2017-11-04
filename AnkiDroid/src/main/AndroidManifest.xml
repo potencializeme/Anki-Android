@@ -20,7 +20,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ichi2.anki"
+    package="com.x3wiser.anki"
     android:installLocation="auto"
     android:versionCode="20900107"
     android:versionName="2.9alpha7">
@@ -56,7 +56,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <permission android:name="com.ichi2.anki.permission.READ_WRITE_DATABASE"
+    <permission android:name="com.x3wiser.anki.permission.READ_WRITE_DATABASE"
         android:label="@string/read_write_permission_label"
         android:description="@string/read_write_permission_description"
         android:protectionLevel="dangerous" />
@@ -72,7 +72,7 @@
         android:xlargeScreens="true" />
 
     <application
-        android:name="com.ichi2.anki.AnkiProApp"
+        android:name="com.x3wiser.anki.AnkiProApp"
         android:allowBackup="true"
         android:icon="@mipmap/anki"
         android:roundIcon="@mipmap/anki_round"
@@ -164,65 +164,65 @@
             </intent-filter>
             <!-- Tasker DO_SYNC intent -->
             <intent-filter>
-                <action android:name="com.ichi2.anki.DO_SYNC" />
+                <action android:name="com.x3wiser.anki.DO_SYNC" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:theme="@style/Theme_Dark_Compat.Launcher"
-            android:name="com.ichi2.anki.DeckPicker"
+            android:name="com.x3wiser.anki.DeckPicker"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name="com.ichi2.anki.StudyOptionsActivity"
+            android:name="com.x3wiser.anki.StudyOptionsActivity"
             android:exported="false"
             android:configChanges="keyboardHidden|locale|orientation|screenSize"
             android:label="StudyOptions"
-            android:parentActivityName="com.ichi2.anki.DeckPicker">
+            android:parentActivityName="com.x3wiser.anki.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker" />
+                android:value="com.x3wiser.anki.DeckPicker" />
         </activity>
         <activity
-            android:name="com.ichi2.anki.CardBrowser"
+            android:name="com.x3wiser.anki.CardBrowser"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Card Browser"
-            android:parentActivityName="com.ichi2.anki.DeckPicker">
+            android:parentActivityName="com.x3wiser.anki.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker" />
+                android:value="com.x3wiser.anki.DeckPicker" />
         </activity>
         <activity
-            android:name="com.ichi2.anki.ModelBrowser"
+            android:name="com.x3wiser.anki.ModelBrowser"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/model_browser_label" />
         <activity
-            android:name="com.ichi2.anki.ModelFieldEditor"
+            android:name="com.x3wiser.anki.ModelFieldEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/model_editor_label" />
         <activity
-            android:name="com.ichi2.anki.Reviewer"
+            android:name="com.x3wiser.anki.Reviewer"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="adjustResize"
-            android:parentActivityName="com.ichi2.anki.DeckPicker">
+            android:parentActivityName="com.x3wiser.anki.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker" />
+                android:value="com.x3wiser.anki.DeckPicker" />
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.VideoPlayer"
+            android:name="com.x3wiser.anki.VideoPlayer"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
@@ -232,30 +232,30 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/menu_my_account" />
         <activity
-            android:name="com.ichi2.anki.Preferences"
+            android:name="com.x3wiser.anki.Preferences"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/preferences_title"
             android:theme="@style/LegacyActionBarLight"/>
         <activity
-            android:name="com.ichi2.anki.DeckOptions"
+            android:name="com.x3wiser.anki.DeckOptions"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
             android:theme="@style/LegacyActionBarLight"/>
         <activity
-            android:name="com.ichi2.anki.FilteredDeckOptions"
+            android:name="com.x3wiser.anki.FilteredDeckOptions"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
             android:theme="@style/LegacyActionBarLight"/>
         <activity
-            android:name="com.ichi2.anki.Info"
+            android:name="com.x3wiser.anki.Info"
             android:exported="false"
             android:configChanges="locale"
             android:label="@string/about_title" />
         <activity
-            android:name="com.ichi2.anki.NoteEditor"
+            android:name="com.x3wiser.anki.NoteEditor"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/fact_adder_intent_title" >
@@ -269,32 +269,32 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog"
+        <activity android:name="com.x3wiser.anki.dialogs.AnkiDroidCrashReportDialog"
             android:theme="@style/Theme.CrashReportDialog"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
             android:finishOnTaskLaunch="true" />
         <activity
-            android:name="com.ichi2.anki.Statistics"
+            android:name="com.x3wiser.anki.Statistics"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:parentActivityName="com.ichi2.anki.DeckPicker">
+            android:parentActivityName="com.x3wiser.anki.DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker" />
+                android:value="com.x3wiser.anki.DeckPicker" />
         </activity>
         <activity
             android:exported="false"
-            android:name="com.ichi2.anki.Previewer"
+            android:name="com.x3wiser.anki.Previewer"
             android:configChanges="locale"
             android:label="@string/preview_title" />
 
-        <service android:name="com.ichi2.anki.services.NotificationService" />
+        <service android:name="com.x3wiser.anki.services.NotificationService" />
 
         <!-- small widget -->
         <receiver
-            android:name="com.ichi2.widget.AnkiDroidWidgetSmall"
+            android:name="com.x3wiser.widget.AnkiDroidWidgetSmall"
             android:label="@string/widget_small" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -307,7 +307,7 @@
 
         <!-- "Add Note" widget -->
         <receiver
-            android:name="com.ichi2.widget.AddNoteWidget"
+            android:name="com.x3wiser.widget.AddNoteWidget"
             android:label="@string/widget_add_note">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -319,10 +319,10 @@
         </receiver>
 
         <!-- Service to perform web API queries -->
-        <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
+        <service android:name="com.x3wiser.widget.AnkiDroidWidgetSmall$UpdateService" />
 
         <receiver
-            android:name="com.ichi2.anki.receiver.SdCardReceiver"
+            android:name="com.x3wiser.anki.receiver.SdCardReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
@@ -338,42 +338,42 @@
         </receiver>
 
         <receiver
-            android:name="com.ichi2.anki.receiver.ReminderReceiver"
+            android:name="com.x3wiser.anki.receiver.ReminderReceiver"
             android:enabled="true"
             android:exported="false">
         </receiver>
         <receiver
-            android:name="com.ichi2.anki.receiver.BootReceiver"
+            android:name="com.x3wiser.anki.receiver.BootReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <service android:name="com.ichi2.anki.services.ReminderService" android:exported="false"/>
-        <service android:name="com.ichi2.anki.services.BootService" android:exported="false"/>
+        <service android:name="com.x3wiser.anki.services.ReminderService" android:exported="false"/>
+        <service android:name="com.x3wiser.anki.services.BootService" android:exported="false"/>
 
         <activity
             android:exported="false"
-            android:name="com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity"
+            android:name="com.x3wiser.anki.multimediacard.activity.MultimediaEditFieldActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_edit_text" >
         </activity>
         <activity
             android:exported="false"
-            android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
+            android:name="com.x3wiser.anki.multimediacard.activity.TranslationActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_translation" >
         </activity>
         <activity
             android:exported="false"
-            android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
+            android:name="com.x3wiser.anki.multimediacard.activity.LoadPronounciationActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_load_pronounciation" >
         </activity>
         <activity
             android:exported="false"
-            android:name="com.ichi2.anki.CardTemplateEditor"
+            android:name="com.x3wiser.anki.CardTemplateEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_template_editor"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
@@ -394,16 +394,16 @@
             android:resource="@drawable/anki" />
 
         <provider
-            android:name="com.ichi2.anki.provider.CardContentProvider"
-            android:authorities="com.ichi2.anki.flashcards"
+            android:name="com.x3wiser.anki.provider.CardContentProvider"
+            android:authorities="com.x3wiser.anki.flashcards"
             android:enabled="true"
             android:exported="true" >
-            <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
+            <meta-data android:name="com.x3wiser.anki.provider.spec" android:value="2" />
         </provider>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.ichi2.anki.apkgfileprovider"
+            android:authorities="com.x3wiser.anki.apkgfileprovider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data

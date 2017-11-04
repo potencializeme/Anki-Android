@@ -18,12 +18,12 @@ package com.ankipro.libanki.importer;
 
 
 import com.google.gson.stream.JsonReader;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.R;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Storage;
-import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.importer.Anki2Importer;
+import com.x3wiser.anki.BackupManager;
+import com.x3wiser.anki.R;
+import com.x3wiser.libanki.Collection;
+import com.x3wiser.libanki.Storage;
+import com.x3wiser.libanki.Utils;
+import com.x3wiser.libanki.importer.Anki2Importer;
 
 import java.io.BufferedInputStream;
 import java.io.File;

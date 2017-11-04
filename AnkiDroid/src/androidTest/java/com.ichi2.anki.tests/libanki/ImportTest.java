@@ -13,22 +13,22 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.tests.libanki;
+package com.x3wiser.anki.tests.libanki;
 
 
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.tests.Shared;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Models;
-import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.importer.Anki2Importer;
-import com.ichi2.libanki.importer.AnkiPackageImporter;
-import com.ichi2.libanki.importer.Importer;
-import com.ichi2.libanki.importer.TextImporter;
+import com.x3wiser.anki.exception.ConfirmModSchemaException;
+import com.x3wiser.anki.tests.Shared;
+import com.x3wiser.libanki.Collection;
+import com.x3wiser.libanki.Models;
+import com.x3wiser.libanki.Note;
+import com.x3wiser.libanki.Utils;
+import com.x3wiser.libanki.importer.Anki2Importer;
+import com.x3wiser.libanki.importer.AnkiPackageImporter;
+import com.x3wiser.libanki.importer.Importer;
+import com.x3wiser.libanki.importer.TextImporter;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -44,7 +44,7 @@
                     android:id="@+id/username"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Concurseiro Ninja email"
+                    android:hint="email"
                     android:inputType="textNoSuggestions|textEmailAddress"
                     android:layout_margin="@dimen/content_vertical_padding"/>
 
@@ -73,7 +73,7 @@
 
 
                 <Button
-                    android:id="@+id/reset_ninja_password_button"
+                    android:id="@+id/reset_ankipro_password_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"

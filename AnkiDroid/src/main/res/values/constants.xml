@@ -20,7 +20,7 @@
         NOT edit them, unless you change their corresponding values
     -->
     <!-- App name -->
-    <string name="app_name">AnkiDroid</string>
+    <string name="app_name">3xWiser</string>
     <!-- Text to be shown in preference summary -->
     <string name="preference_summary_literal" translatable="false">XXX</string>
     <!-- Used in deck preferences -->
@@ -137,9 +137,9 @@
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
     <string name="changelog_url">https://ankidroid.org/docs/changelog.html</string>
-    <string name="resetninja_pw_url">https://www.ankidroid.com/</string>
-    <string name="link_ninja_register">https://www.ankidroid.com/</string>
-    <string name="link_ninja_buy">https://www.ankidroid.com/</string>
+    <string name="resetankipro_pw_url">https://www.ankidroid.com/</string>
+    <string name="link_ankipro_register">https://www.ankidroid.com/</string>
+    <string name="link_ankipro_buy">https://www.ankidroid.com/</string>
 
     <string-array name="leech_action_values">
         <item>0</item>

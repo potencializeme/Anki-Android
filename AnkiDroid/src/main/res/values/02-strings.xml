@@ -181,7 +181,7 @@
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
-    <string name="deck_ninja_empty" translatable="false">You don\'t have products. Please, acquire some and try again.</string>
+    <string name="deck_ankipro_empty" translatable="false">You don\'t have products. Please, acquire some and try again.</string>
     <string name="product_not_present" translatable="false">This product is not present on the products buyed.</string>
 
     <!-- Time spans -->

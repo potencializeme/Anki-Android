@@ -6,10 +6,10 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        applicationId "com.ichi2.anki"
+        applicationId "com.x3wiser.anki"
         minSdkVersion 10
         targetSdkVersion 25
-        testApplicationId "com.ichi2.anki.tests"
+        testApplicationId "com.x3wiser.anki.tests"
         vectorDrawables.useSupportLibrary = true
     }
     lintOptions {

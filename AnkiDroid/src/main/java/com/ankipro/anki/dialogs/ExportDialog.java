@@ -9,11 +9,11 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ankipro.model.Produto;
-import com.ichi2.anki.R;
+import com.x3wiser.anki.R;
 
 import java.util.List;
 
-public class ExportDialog extends com.ichi2.anki.dialogs.ExportDialog {
+public class ExportDialog extends com.x3wiser.anki.dialogs.ExportDialog {
 
     public static DialogFragment newInstance(List<String> products_keys, List<Produto> produtos, Long did, String dialogMessage) {
         ExportDialog f = new ExportDialog();

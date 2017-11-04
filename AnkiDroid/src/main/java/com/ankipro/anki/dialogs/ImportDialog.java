@@ -8,14 +8,14 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ankipro.libanki.Utils;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
+import com.x3wiser.anki.CollectionHelper;
+import com.x3wiser.anki.R;
+import com.x3wiser.anki.UIUtils;
 
 import java.io.File;
 import java.util.List;
 
-public class ImportDialog extends com.ichi2.anki.dialogs.ImportDialog {
+public class ImportDialog extends com.x3wiser.anki.dialogs.ImportDialog {
     private int mType = 0;
     
     public static final int DIALOG_IMPORT_HINT = 0;

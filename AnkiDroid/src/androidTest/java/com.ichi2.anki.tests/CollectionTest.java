@@ -1,8 +1,8 @@
-package com.ichi2.anki.tests;
+package com.x3wiser.anki.tests;
 
 import android.test.AndroidTestCase;
 
-import com.ichi2.anki.CollectionHelper;
+import com.x3wiser.anki.CollectionHelper;
 
 import java.io.IOException;
 

@@ -18,8 +18,8 @@ package com.ankipro.libanki;
 
 import android.content.Context;
 
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Storage;
+import com.x3wiser.libanki.Collection;
+import com.x3wiser.libanki.Storage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -95,7 +95,7 @@ class AnkiExporter extends ExporterPro {
         // find cards
         Long[] cids;
         if (mDid == null) {
-            cids = com.ichi2.libanki.Utils.list2ObjectArray(mSrc.getDb().queryColumn(Long.class, "SELECT id FROM cards", 0));
+            cids = com.x3wiser.libanki.Utils.list2ObjectArray(mSrc.getDb().queryColumn(Long.class, "SELECT id FROM cards", 0));
         } else {
             cids = mSrc.getDecks().cids(mDid, true);
         }
@@ -107,13 +107,13 @@ class AnkiExporter extends ExporterPro {
         // copy cards, noting used nids (as unique set)
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
-                .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + com.ichi2.libanki.Utils.ids2str(cids));
+                .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + com.x3wiser.libanki.Utils.ids2str(cids));
         Set<Long> nids = new HashSet<>(mSrc.getDb().queryColumn(Long.class,
-                "select nid from cards where id in " + com.ichi2.libanki.Utils.ids2str(cids), 0));
+                "select nid from cards where id in " + com.x3wiser.libanki.Utils.ids2str(cids), 0));
         // notes
         Timber.d("Copy notes");
         ArrayList<Long> uniqueNids = new ArrayList<>(nids);
-        String strnids = com.ichi2.libanki.Utils.ids2str(uniqueNids);
+        String strnids = com.x3wiser.libanki.Utils.ids2str(uniqueNids);
         mSrc.getDb().getDatabase().execSQL("INSERT INTO DST_DB.notes select * from notes where id in " + strnids);
         // remove system tags if not exporting scheduling info
         if (!mIncludeSched) {
@@ -137,7 +137,7 @@ class AnkiExporter extends ExporterPro {
         if (mIncludeSched) {
             Timber.d("Copy history and revlog");
             mSrc.getDb().getDatabase()
-                    .execSQL("insert into DST_DB.revlog select * from revlog where cid in " + com.ichi2.libanki.Utils.ids2str(cids));
+                    .execSQL("insert into DST_DB.revlog select * from revlog where cid in " + com.x3wiser.libanki.Utils.ids2str(cids));
             // reopen collection to destination database (different from original python code)
             mSrc.getDb().getDatabase().execSQL("DETACH DST_DB");
             dst.reopen();

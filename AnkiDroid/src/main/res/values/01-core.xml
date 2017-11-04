@@ -148,6 +148,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
-    <string name="wrong_ninja_password" translatable="false">"Click here, if need help, "</string>
-    <string name="wrong_ninja_help" translatable="false">Click here</string>
+    <string name="wrong_ankipro_password" translatable="false">"Click here, if need help, "</string>
+    <string name="wrong_ankipro_help" translatable="false">Click here</string>
 </resources>

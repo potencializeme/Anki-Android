@@ -32,7 +32,7 @@
             android:title="@string/sync_account" >
             <intent
                 android:targetClass="com.ankipro.anki.AnkiProAccount"
-                android:targetPackage="com.ichi2.anki" />
+                android:targetPackage="com.x3wiser.anki" />
         </Preference>
         <CheckBoxPreference
             android:defaultValue="true"

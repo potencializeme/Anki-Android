@@ -19,9 +19,9 @@ package com.ankipro.anki;
 import android.content.SharedPreferences;
 
 import com.ankipro.libanki.Utils;
-import com.ichi2.anki.AnkiProApp;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.CollectionHelper;
+import com.x3wiser.anki.AnkiProApp;
+import com.x3wiser.anki.BackupManager;
+import com.x3wiser.anki.CollectionHelper;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

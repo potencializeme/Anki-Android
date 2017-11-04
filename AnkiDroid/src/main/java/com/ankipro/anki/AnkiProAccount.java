@@ -34,13 +34,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ankipro.model.Produto;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiProApp;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.async.Connection;
-import com.ichi2.themes.StyledProgressDialog;
+import com.x3wiser.anim.ActivityTransitionAnimation;
+import com.x3wiser.anki.AnkiActivity;
+import com.x3wiser.anki.AnkiProApp;
+import com.x3wiser.anki.R;
+import com.x3wiser.anki.UIUtils;
+import com.x3wiser.async.Connection;
+import com.x3wiser.themes.StyledProgressDialog;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -70,7 +70,7 @@ public class AnkiProAccount extends AnkiActivity {
                 mUsernameLoggedIn.setText(username);
                 mToolbar = (Toolbar) mLoggedIntoAnkiProAccountView.findViewById(R.id.toolbar);
                 if (mToolbar != null) {
-                    mToolbar.setTitle(getString(R.string.ninja_sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    mToolbar.setTitle(getString(R.string.ankipro_sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
                     setSupportActionBar(mToolbar);
                 }
                 setContentView(mLoggedIntoAnkiProAccountView);
@@ -79,7 +79,7 @@ public class AnkiProAccount extends AnkiActivity {
             case STATE_LOG_IN:
                 mToolbar = (Toolbar) mLoginToAnkiProAccountView.findViewById(R.id.toolbar);
                 if (mToolbar != null) {
-                    mToolbar.setTitle(getString(R.string.ninja_sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    mToolbar.setTitle(getString(R.string.ankipro_sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
                     setSupportActionBar(mToolbar);
                 }
                 setContentView(mLoginToAnkiProAccountView);
@@ -178,7 +178,7 @@ public class AnkiProAccount extends AnkiActivity {
         try {
             getCol().getMedia().forceResync();
         } catch (SQLiteException e) {
-            Timber.e("Concurseiro Ninja Account -.logout()  reinitializing media db due to sqlite error");
+            Timber.e("AnkiProAccount -.logout()  reinitializing media db due to sqlite error");
             getCol().getMedia()._initDB();
         }
         switchToState(STATE_LOG_IN);
@@ -187,7 +187,7 @@ public class AnkiProAccount extends AnkiActivity {
 
     private void resetPassword() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(getResources().getString(R.string.resetninja_pw_url)));
+        intent.setData(Uri.parse(getResources().getString(R.string.resetankipro_pw_url)));
         startActivity(intent);
     }
 
@@ -207,7 +207,7 @@ public class AnkiProAccount extends AnkiActivity {
 
         });
 
-        Button resetPWButton = (Button) mLoginToAnkiProAccountView.findViewById(R.id.reset_ninja_password_button);
+        Button resetPWButton = (Button) mLoginToAnkiProAccountView.findViewById(R.id.reset_ankipro_password_button);
         resetPWButton.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -220,7 +220,7 @@ public class AnkiProAccount extends AnkiActivity {
         signUpButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                openUrl(Uri.parse(getResources().getString(R.string.link_ninja_register)));
+                openUrl(Uri.parse(getResources().getString(R.string.link_ankipro_register)));
             }
 
         });
@@ -253,7 +253,7 @@ public class AnkiProAccount extends AnkiActivity {
 
         @Override
         public void onPreExecute() {
-            Timber.d("Concurseiro Ninja Account - loginListener.onPreExcecute()");
+            Timber.d("AnkiProAccount - loginListener.onPreExcecute()");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(AnkiProAccount.this, "",
                         getResources().getString(R.string.alert_logging_message), false);
@@ -268,7 +268,7 @@ public class AnkiProAccount extends AnkiActivity {
             }
 
             if (data.success) {
-                Timber.i("Concurseiro Ninja Account - User successfully logged in!");
+                Timber.i("AnkiProAccount - User successfully logged in!");
                 saveAnkiProUserInformation((String) data.data[0], (String) data.data[1],(String)data.data[2],(List<Produto>)data.result);
 
                 Intent i = AnkiProAccount.this.getIntent();
@@ -281,12 +281,12 @@ public class AnkiProAccount extends AnkiActivity {
                     switchToState(STATE_LOGGED_IN);
                 }
             } else {
-                Timber.e("Concurseiro Ninja Account - Login failed, error code %d", data.returnType);
+                Timber.e("AnkiProAccount - Login failed, error code %d", data.returnType);
                 if (data.returnType == 401) {
                     // If the deck is empty and has no children then show a message saying it's empty
-                    final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_ninja_register));
+                    final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_ankipro_register));
                     mayOpenUrl(helpUrl);
-                    UIUtils.showSnackbar(AnkiProAccount.this, R.string.wrong_ninja_password, false, R.string.wrong_ninja_help, new OnClickListener() {
+                    UIUtils.showSnackbar(AnkiProAccount.this, R.string.wrong_ankipro_password, false, R.string.wrong_ankipro_help, new OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             openUrl(helpUrl);
@@ -294,7 +294,7 @@ public class AnkiProAccount extends AnkiActivity {
                     }, findViewById(R.id.root_layout));
                 }else if (data.returnType == 403) {
                     //TODO make AnkiNinja return no authorized
-                    UIUtils.showSimpleSnackbar(AnkiProAccount.this, R.string.invalid_ninja_username_password, true);
+                    UIUtils.showSimpleSnackbar(AnkiProAccount.this, R.string.invalid_ankipro_username_password, true);
                 } else {
                     UIUtils.showSimpleSnackbar(AnkiProAccount.this, R.string.connection_error_message, true);
                 }
@@ -312,7 +312,7 @@ public class AnkiProAccount extends AnkiActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("Concurseiro Ninja Account - onBackPressed()");
+            Timber.i("AnkiProAccount - onBackPressed()");
             finishWithAnimation(ActivityTransitionAnimation.FADE);
             return true;
         }

@@ -7,19 +7,19 @@ import android.os.Message;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.R;
-import com.ichi2.anki.dialogs.DialogHandler;
-import com.ichi2.compat.CompatHelper;
+import com.x3wiser.anki.AnkiActivity;
+import com.x3wiser.anki.BackupManager;
+import com.x3wiser.anki.CollectionHelper;
+import com.x3wiser.anki.DeckPicker;
+import com.x3wiser.anki.R;
+import com.x3wiser.anki.dialogs.DialogHandler;
+import com.x3wiser.compat.CompatHelper;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DatabaseErrorDialog extends com.ichi2.anki.dialogs.DatabaseErrorDialog {
+public class DatabaseErrorDialog extends com.x3wiser.anki.dialogs.DatabaseErrorDialog {
     private int mType = 0;
     private int[] mRepairValues;
     private File[] mBackups;
