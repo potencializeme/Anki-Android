@@ -45,6 +45,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -55,6 +56,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -460,7 +463,61 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
             }
         }
+
+
+        /**
+         * AnkiPro Wellcome
+         */
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+            View mView = getLayoutInflater().inflate(R.layout.ankipro_wellcome, null);
+            CheckBox mCheckBox = (CheckBox) mView.findViewById(R.id.checkBox);
+
+            mBuilder.setView(mView);
+            mBuilder.setPositiveButton("fechar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+
+            AlertDialog mDialog = mBuilder.create();
+            mDialog.show();
+            mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(compoundButton.isChecked()){
+                        storeDialogStatus(true);
+                    }else{
+                        storeDialogStatus(false);
+                    }
+                }
+            });
+
+            if(getDialogStatus()){
+                mDialog.hide();
+            }else{
+                mDialog.show();
+            }
+        }
+
+    private void storeDialogStatus(boolean isChecked){
+        SharedPreferences mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.putBoolean("item", isChecked);
+        mEditor.apply();
     }
+
+    private boolean getDialogStatus(){
+        SharedPreferences mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE);
+        return mSharedPreferences.getBoolean("item", false);
+    }
+    public void abrirSite(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://3xwiser.com/demo-deck/"));
+        startActivity(browserIntent);
+    }
+
+// Ankipro Wellcome End!
+
 
     /**
      * Try to open the Collection for the first time, and do some error handling if it wasn't successful
